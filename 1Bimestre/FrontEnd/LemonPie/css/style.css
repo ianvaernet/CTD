@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Playfair+Display:ital@1&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+main {
+  margin: 0 10px;
+  color: #444;
+}
+
+h1 {
+  font-size: 3.5em;
+}
+
+p {
+  font-size: 1.3em;
+}
+
+h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+div {
+  color: white;
+}
+
+span {
+  color: limegreen;
+  text-decoration: underline;
+}
+
+.logo-front {
+  margin-top: 8px;
+}
+
+.banner {
+  background-image: url(../img/lemon-pie2.jpg);
+  background-size: cover;
+}
