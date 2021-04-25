@@ -1,0 +1,55 @@
+.descuento {
+  background-color: #1cd1b0;
+  font-family: 'Roboto', sans-serif;
+  width: cover;
+  padding-left: 20px;
+  font-size: 15px;
+  padding-top: 2px;
+  font-weight: 400;
+}
+.nombretienda {
+  font-family: 'Roboto', sans-serif;
+  color: #ffffff;
+  margin: 0px;
+  padding-left: 20px;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 35px;
+  letter-spacing: 0em;
+  text-align: center;
+  position: absolute;
+  padding-top: 27px;
+}
+.navegacion {
+  text-align: right;
+  background: #001d2d;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 10px 30px;
+}
+.registro,
+.ingreso,
+.contacto {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0px 15px;
+}
+.registro:hover,
+.ingreso:hover,
+.contacto:hover {
+  color: #00669f;
+}
+header {
+  position: sticky;
+  top: 0px;
+  z-index: 100;
+}
+h1 {
+  padding-left: 10px;
+  background-color: #00669f;
+  width: cover;
+  margin: 0px;
+  position: relative;
+}

@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700&family=Karla:wght@400;700&family=Roboto&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0px;
+}
+
+footer {
+  height: 61px;
+  background: #00669f;
+}
+.pie {
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  height: 19px;
+  left: 549.15px;
+  top: 1076px;
+  font-size: 15px;
+  line-height: 19px;
+  text-align: center;
+  color: #fff9f9;
+  margin: auto;
+  padding-top: 21px;
+}

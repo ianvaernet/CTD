@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce</title>
+    <link rel="stylesheet" href="./css/header.css" />
+    <link rel="stylesheet" href="css/registro.css" >
+    <link rel="stylesheet" href="./css/footer.css" />
+</head>
+
+<body>
+  <aside class="descuento">20% de descuento en todos los productos!</aside>
+  <header>
+    <h1>
+      <a href="./index.html">
+          <img src="./img/tienda.png" alt="imagen tienda" />
+          <span class="nombretienda">Nombre Tienda</span>
+      </a>
+    </h1>
+    <div class="navegacion">
+      <a href="./contacto.html" class="contacto">Contacto</a>
+      <a href="./registro.html" class="registro">Registrarme</a>
+      <a href="./ingresar.html" class="ingreso">Ingresar</a>
+    </div>
+  </header>
+    <div class="registrobox">
+        <h2 class="Registro">Registro</h2>
+        <form action="index.html" method="POST">
+            <input type="text" id="NombreYApellido" name="NombreYApellido" placeholder="Nombre y Apellido" required></input>
+            <input type="email" id="CorreoElectronico" name="CorreoElectronico" placeholder="Correo electronico" required></input>
+            <input type="password" id="Contraseña" name="Contraseña" placeholder="Contraseña" required></input>
+            <select placeholder="Pais" id="pais" required>
+                <option value="" selected disabled>Pais</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Brasil">Brasil</option>
+            </select>
+            <div>
+                <button type="reset" class="resetear">Resetear</button>
+                <button type="submit" class="enviar">Enviar</button>
+            </div>
+        </form>
+        <p class="cuentaexistente">¿Ya tenés una cuenta? <a href='./ingresar.html'>Ingresá</a></p>
+    </div>
+    <footer>
+        <p class="pie">Todos los derechos reservados a FRONT END 1</p>
+    </footer>
+</body>
+
+</html>

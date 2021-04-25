@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Superheroes</title>
+    <link rel="stylesheet" href="./css/header.css" />
+    <link rel="stylesheet" href="./css/formulario.css" />
+    <link rel="stylesheet" href="./css/footer.css" />
+  </head>
+
+  <body>
+    <aside class="descuento">20% de descuento en todos los productos!</aside>
+    <header>
+      <h1>
+        <a href="./index.html">
+          <img src="./img/tienda.png" alt="imagen tienda" />
+          <span class="nombretienda">Nombre Tienda</span>
+        </a>
+      </h1>
+      <div class="navegacion">
+        <a href="./contacto.html" class="contacto">Contacto</a>
+        <a href="./registro.html" class="registro">Registrarme</a>
+        <a href="./ingresar.html" class="ingreso">Ingresar</a>
+      </div>
+    </header>
+    <main class="caja-agregar-personaje">
+      <h3 class="titulo-agregar">Añadí tu super!</h3>
+      <h4 class="subtitulo-agrega-personaje">Agregá tu personaje favorito completando las opciones.</h4>
+      <form action="index.html" method="POST">
+        <div class="agregar-form">
+          <div class="columna-1">
+            <div class="box-nombre">
+              <label>Nombre *</label>
+              <input type="text" name="name" class="form-control" placeholder="Nombre del Superheroe" required id="id_name" />
+            </div>
+            <div class="box-fecha-nacimiento">
+              <label>Fecha de Nacimiento</label>
+              <input type="date" name="date" class="form-control" id="id_date" />
+            </div>
+            <div class="descripcion">
+              <label>Descripción</label>
+              <textarea class="descripcion-caja" data-id="id_description" placeholder="Descripción"></textarea>
+            </div>
+          </div>
+
+          <div class="columna-2">
+            <div class="box-especie">
+              <label for="select-especie">Especie *</label>
+              <select id="select-especie" required>
+                <option value="" disabled selected>Selecciona una especie</option>
+                <option>Especie 1</option>
+                <option>Especie 2</option>
+                <option>Especie 3</option>
+              </select>
+            </div>
+            <div class="box-foto-perfil">
+              <label id="agregar-foto">Agregar foto</label>
+              <label for="id_profile_image" id="boton-archivo" class="seleccionar-archivo">Seleccionar archivo</label>
+              <input type="file" name="profile_image" class="form-control" accept="image/*" id="id_profile_image" />
+              <span class="no-se-eligio">No se eligió archivo</span>
+            </div>
+            <div class="box-superpoderes">
+              <label for="id_superpower" class="poderes">Superpoderes</label>
+              <div class="volar">
+                <input
+                  type="checkbox"
+                  name="superpower"
+                  value="Volar"
+                  class="form-check-input"
+                  type="checkbox"
+                  id="id_superpower_0"
+                /><label for="id_superpower_0">Volar</label>
+              </div>
+              <div class="superinteligencia">
+                <input
+                  type="checkbox"
+                  name="superpower"
+                  value="Superinteligencia"
+                  class="form-check-input"
+                  type="checkbox"
+                  id="id_superpower_1"
+                /><label for="id_superpower_1">Superinteligencia</label>
+              </div>
+              <div class="rayo-laser">
+                <input
+                  type="checkbox"
+                  name="superpower"
+                  value="Vista de rayo láser"
+                  empty_label="None"
+                  class="form-check-input"
+                  type="checkbox"
+                  id="id_superpower_2"
+                />
+                <label for="id_superpower_2">Vista de rayo láser</label>
+              </div>
+              <div class="billetera-gorda">
+                <input
+                  type="checkbox"
+                  name="superpower"
+                  value="Billetera gorda"
+                  empty_label="None"
+                  class="form-check-input"
+                  type="checkbox"
+                  id="id_superpower_3"
+                /><label for="id_superpower_3">Billetera gorda</label>
+              </div>
+            </div>
+            <hr />
+            <div class="box-tipo-personaje">
+              <label>Tipo de personaje</label>
+              <div class="heroe">
+                <input type="radio" name="heroe_villano" value="Heroe" type="radio" id="id_heroe_villano_0" required /><label
+                  for="id_heroe_villano_0"
+                  >Héroe/Heroína</label
+                >
+              </div>
+              <div class="villano">
+                <input type="radio" name="heroe_villano" value="Villano" type="radio" id="id_heroe_villano_1" required />
+                <label for="id_heroe_villano_1">Villano/Villana</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="boton-añadir-container">
+          <button type="submit" class="boton-añadir">Añadir</button>
+        </div>
+      </form>
+    </main>
+    <footer>
+      <p class="pie">Todos los derechos reservados a FRONT END 1</p>
+    </footer>
+  </body>
+</html>
