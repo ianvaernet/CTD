@@ -1,0 +1,11 @@
+Noticia: https://thehackernews.com/2021/02/first-malware-designed-for-apple-m1.html
+
+Preguntas:
+1- ¿Qué tipo de amenaza es?
+Se trata de un adware, es decir, un tipo de malware que muestra publicidad no deseada o engañosa al usuario. Fue diseñado para funcionar de forma nativa en los chips M1 de Apple.
+
+2- ¿Cómo comienza y cómo se propaga esta amenaza?
+El adware se hace pasar por una extensión legítima del navegador Safari llamada GoSearch 22, siendo instalada por los usuarios. Luego, en las publicidades incluye links que llevan a sitios web maliciosos con el propósito de distribuir malware adicional.
+
+3- ¿Hay más de una amenaza aplicada ?
+No, se trata únicamente de un adware, y si bien las capacidades pueden no ser completamente nuevas o peligrosas, la aparición de un nuevo malware compatible con M1 puede ser solo el comienzo y es probable que surjan más variantes en el futuro.
