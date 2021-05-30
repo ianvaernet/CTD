@@ -1,0 +1,55 @@
+const fs = require('fs');
+const bicicletas = JSON.parse(fs.readFileSync(__dirname + '/BICICLETAS.json'));
+
+const carrera = {
+  bicicletas,
+  bicisPorTanda: 6,
+  bicicletasHabilitadas: function () {
+    return this.bicicletas.filter((bicicleta) => !bicicleta.doppingPositivo);
+  },
+  listarBicicletas: function (bicicletas) {
+    bicicletas.forEach((bicicleta) => {
+      console.log(
+        `Id: ${bicicleta.id}, peso en Kg: ${bicicleta.pesoEnKg.toFixed(3)}, rodado: ${bicicleta.rodado}, estado: ${
+          bicicleta.doppingPositivo ? 'descalificado' : 'habilitado'
+        }`
+      );
+    });
+  },
+  buscarPorCiclista: function (ciclistaBuscado) {
+    return this.bicicletas.find((bicicleta) => bicicleta.ciclista === ciclistaBuscado);
+  },
+  buscarPorLargo: function (largoMaximo) {
+    return this.bicicletasHabilitadas().filter((bicicleta) => bicicleta.largoEnCm <= largoMaximo);
+  },
+  ordenarPorPeso: function () {
+    return this.bicicletas.sort((bicicleta1, bicicleta2) => bicicleta1.pesoEnKg - bicicleta2.pesoEnKg);
+  },
+  generarTanda: function (rodadoMaximo, pesoMaximo) {
+    const bicicletasEnCondiciones = this.bicicletasHabilitadas().filter(
+      (bicicleta) => bicicleta.rodado <= rodadoMaximo && bicicleta.pesoEnKg <= pesoMaximo
+    );
+    return bicicletasEnCondiciones.slice(0, this.bicisPorTanda);
+  },
+  calcularPodio: function (rodadoMaximo, pesoMaximo) {
+    const tandaDeBicicletas = this.generarTanda(rodadoMaximo, pesoMaximo);
+    const podio = tandaDeBicicletas.sort((bicicleta1, bicicleta2) => bicicleta2.puntaje - bicicleta1.puntaje).slice(0, 3);
+    console.log(`
+        El ganador es ${podio[0].ciclista}, con un puntaje de ${podio[0].puntaje}
+        El segundo puesto es para ${podio[1].ciclista}, con un puntaje de ${podio[1].puntaje}
+        Y el tercer puesto es para ${podio[2].ciclista}, con un puntaje de ${podio[2].puntaje}
+    `);
+  },
+};
+
+console.log('Ejercicio A - bicicletas:\n', carrera.bicicletas);
+console.log('\nEjercicio B - bicisPorTanda:\n', carrera.bicisPorTanda);
+console.log('\nEjercicio C - bicicletasHabilitadas():\n', carrera.bicicletasHabilitadas());
+console.log('\nEjercicio D - listarBiciletas(carrera.bicicletas):');
+carrera.listarBicicletas(carrera.bicicletas);
+console.log('\nEjercicio E - buscarPorCiclista("Jo-anne Coker"):\n', carrera.buscarPorCiclista('Jo-anne Coker'));
+console.log('\nEjercicio F - buscarPorLargo(105):\n', carrera.buscarPorLargo(105));
+console.log('\nEjercicio G - ordenarPorPeso():\n', carrera.ordenarPorPeso());
+console.log('\nEjercicio H - generarTanda(65, 8):\n', carrera.generarTanda(65, 8));
+console.log('\nEjercicio I - calcularPodio(65, 8):');
+carrera.calcularPodio(65, 8);

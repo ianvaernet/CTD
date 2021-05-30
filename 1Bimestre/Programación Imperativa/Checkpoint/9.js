@@ -1,0 +1,58 @@
+const autos = require('./autos');
+
+let concesionaria = {
+  autos: autos,
+  buscarAuto: function (patente) {
+    for (let i = 0; i < this.autos.length; i++) {
+      if (this.autos[i].patente === patente) return this.autos[i];
+    }
+    return null;
+  },
+  venderAuto: function (patente) {
+    const auto = this.buscarAuto(patente);
+    if (auto) auto.vendido = true;
+  },
+  autosParaLaVenta: function () {
+    const autos = [];
+    for (let i = 0; i < this.autos.length; i++) {
+      if (!this.autos[i].vendido) autos.push(this.autos[i]);
+    }
+    return autos;
+  },
+  autosNuevos: function () {
+    const autos = this.autosParaLaVenta();
+    const autosNuevos = [];
+    for (let i = 0; i < autos.length; i++) {
+      if (autos[i].km < 100) autosNuevos.push(autos[i]);
+    }
+    return autosNuevos;
+  },
+  listaDeVentas: function () {
+    const ventas = [];
+    for (let i = 0; i < this.autos.length; i++) {
+      if (this.autos[i].vendido) ventas.push(this.autos[i].precio);
+    }
+    return ventas;
+  },
+  totalDeVentas: function () {
+    const ventas = this.listaDeVentas();
+    let total = 0;
+    for (let i = 0; i < ventas.length; i++) {
+      total += ventas[i];
+    }
+    return total;
+  },
+  puedeComprar: function (auto, persona) {
+    const capacidadTotal = persona.capacidadDePagoTotal >= auto.precio;
+    const capacidadCuotas = persona.capacidadDePagoEnCuotas >= auto.precio / auto.cuotas;
+    return capacidadTotal && capacidadCuotas;
+  },
+  autosQuePuedeComprar: function (persona) {
+    const autosEnVenta = this.autosParaLaVenta();
+    const autosPuedeComprar = [];
+    for (let i = 0; i < autosEnVenta.length; i++) {
+      if (this.puedeComprar(autosEnVenta[i], persona)) autosPuedeComprar.push(autosEnVenta[i]);
+    }
+    return autosPuedeComprar;
+  },
+};
