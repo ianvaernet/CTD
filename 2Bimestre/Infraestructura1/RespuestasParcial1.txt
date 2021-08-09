@@ -1,0 +1,20 @@
+Al virtualizar sistemas se logra: 
+- Un mayor aprovechamiento de los recursos ya que se puede disponer de varios servidores virtuales en un único servidor físico, de manera que se reduzca el porcentaje de recursos ociosos. 
+- Posibilidad de correr diferentes sistemas operativos al mismo tiempo. 
+- Simplicidad a la hora de realizar backups y snapshots. 
+- Contar con un entorno aislado donde se pueden realizar pruebas. 
+- Reducción de costos y rápida provisión de servidores (sin la necesidad de tener que adquirir hardware cada vez).
+- Rápida configuración y despliegue más sencillo. 
+- Posibilidad de contar con alta disponibilidad al hacer uso de la redundancia.
+
+
+El protoclo UDP, a diferencia de TCP, no espera la confirmación de la recepción por parte del destinatario (ni realiza reintentos en caso de que no se reciba), de manera que la cantidad de información adicional que se transmite es menor, dando lugar a una transmisión más rápida. Esto da lugar a que sea usado en aplicaciones como juegos online, streaming, etc.
+
+
+En la arquitectura cliente-servidor existe un cliente (dispositivo del usuario, en general con pocos recursos) que realiza una petición, esta pasa por el middleware y llega al servidor. El servidor (equipo -uno o varios- con grandes prestaciones para atender las solicitudes de todos los usuarios) procesa la petición, realiza las acciones necesarias y envía la respuesta, la cual pasa por el middleware y llega al cliente.
+
+
+Linux es un kernel (el núcleo o la parte más importante de un sistema operativo). Existen muchos sistemas operativos que hacen uso de dicho kernel y agregan sobre este diferentes aplicaciones para distintos usos y gustos. A estos sistemas operativos que hacen uso del kernel Linux se los conoce como distribuciones de Linux: Ubuntu, Debian, Fedora, etc.
+
+
+A diferencia de lo utilizado habitualmente en nuestras computadoras, en los servidores se hace uso de diferentes servicios como los de publicación web (procesamiento de solicitudes http y respuesta con el contenido solicitado), correo electrónico (envío y recepción de emails), archivos (almacenamiento centralizado), bases de datos (almacenamiento y manipulación de datos), red (enrutamiento y firewall) y dominio
