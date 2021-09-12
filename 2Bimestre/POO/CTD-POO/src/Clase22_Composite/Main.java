@@ -3,15 +3,11 @@ package Clase22_Composite;
 public class Main {
     public static void main(String[] args) {
         Tren tren = new Tren();
-        Geometrico rectangulo1 = new Rectangulo(5.0, 4.0);
-        Geometrico circulo1 = new Circulo(1.0);
-        Geometrico circulo2 = new Circulo(1.0);
-        Geometrico circulo3 = new Circulo(1.0);
         ParteDeTren vagon = new ParteDeTren();
-        vagon.agregarFigura(rectangulo1);
-        vagon.agregarFigura(circulo1);
-        vagon.agregarFigura(circulo2);
-        vagon.agregarFigura(circulo3);
+        vagon.agregarFigura(new Rectangulo(5.0, 4.0));
+        vagon.agregarFigura(new Circulo(1.0));
+        vagon.agregarFigura(new Circulo(1.0));
+        vagon.agregarFigura(new Circulo(1.0));
         System.out.println(vagon.calcularArea());
 
         ParteDeTren locomotora = new ParteDeTren();

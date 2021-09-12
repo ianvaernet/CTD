@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="style/main.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ba55537a70.js" crossorigin="anonymous"></script>
+</head>
+<body th:fragment="sidebar(role, user_fullname)" class="height-100vh">
+    <aside class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark height-100vh" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <span class="fs-4" th:text="${role}">Clínica odontológica</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white" id="navbar_home">
+                    <i class="fas fa-home fa-lg bi me-2"></i>
+                    Inicio
+                </a>
+            </li>
+            <li th:if="${role.equals('ADMIN')}">
+                <a href="/dentists" class="nav-link text-white" id="navbar_dentists">
+                    <i class="fas fa-user-nurse fa-lg me-2"></i>
+                    Odontólogos
+                </a>
+            </li>
+            <li th:if="${role.equals('ADMIN')}">
+                <a href="/patients" class="nav-link text-white" id="navbar_patients">
+                    <i class="fas fa-tooth fa-lg me-2"></i>
+                    Pacientes
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white" id="navbar_login">
+                    <i class="fas fa-calendar-day fa-lg me-2"></i>
+                    Turnos
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong th:text="${user_fullname}"></strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="#">Cambiar contraseña</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+            </ul>
+        </div>
+    </aside>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+<script>
+    const currentUrl = window.location.href;
+    const navbarTitles = ["home", "dentists", "patients", "login"];
+    const section = navbarTitles.find(url => currentUrl.includes(url));
+    document.getElementById("navbar_"+section).classList.add("active");
+</script>
+</html>

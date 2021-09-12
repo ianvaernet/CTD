@@ -11,6 +11,10 @@ public class Recorrido {
         this.medio = medio;
     }
 
+    public void setMedio(Strategy medio) {
+        this.medio = medio;
+    }
+
     public Double calcularTiempo() {
         return medio.calcularTiempo(punto1, punto2);
     }

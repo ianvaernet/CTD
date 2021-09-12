@@ -1,0 +1,44 @@
+[2021-08-19 18:16:06] [INFO ] [Main:8] asd
+[2021-08-19 18:17:15] [ERROR] [Main:11] Error al intentar dividir por 0
+java.lang.ArithmeticException: / by zero
+	at Clase10_Logs.Main.main(Main.java:9)
+[2021-08-19 20:09:43] [ERROR] [Main:11] Error al intentar dividir por 0
+java.lang.ArithmeticException: / by zero
+	at Clase10_Logs.Main.main(Main.java:9)
+[2021-08-24 16:28:09] [ERROR] [Main:84] Error de Sintaxis en sentencia SQL "SELECT * FR[*];OM USER WHERE ID = ?;"
+Syntax error in SQL statement "SELECT * FR[*];OM USER WHERE ID = ?;"; SQL statement:
+SELECT * FR;OM USER WHERE ID = ?; [42000-200]
+[2021-08-24 16:28:09] [ERROR] [Main:85] [Ljava.lang.StackTraceElement;@5906ebcb
+[2021-08-24 16:29:08] [ERROR] [Main:84] Error de Sintaxis en sentencia SQL "SELECT * FR[*];OM USER WHERE ID = ?;"
+Syntax error in SQL statement "SELECT * FR[*];OM USER WHERE ID = ?;"; SQL statement:
+SELECT * FR;OM USER WHERE ID = ?; [42000-200]
+[2021-08-24 16:29:08] [ERROR] [Main:85] [Ljava.lang.StackTraceElement;@5906ebcb
+[2021-08-24 16:30:31] [ERROR] [Main:84] Error de Sintaxis en sentencia SQL "SELECT * FR[*];OM USER WHERE ID = ?;"
+Syntax error in SQL statement "SELECT * FR[*];OM USER WHERE ID = ?;"; SQL statement:
+SELECT * FR;OM USER WHERE ID = ?; [42000-200]
+[2021-08-24 18:21:45] [ERROR] [PatientDAO:29] Tabla "PATIENT" no encontrada
+Table "PATIENT" not found; SQL statement:
+INSERT INTO PATIENT (username, password, first_name, last_name) VALUES (?, ?, ?, ?); [42102-200]
+[2021-08-25 15:34:23] [ERROR] [H2Database:19] Error trying to connect to database: Conexión rota: "java.net.SocketTimeoutException: connect timed out: localhost"
+Connection is broken: "java.net.SocketTimeoutException: connect timed out: localhost" [90067-200]
+[2021-08-25 17:45:55] [ERROR] [PatientDAOJDBC:67] Tabla "USER" no encontrada
+Table "USER" not found; SQL statement:
+SELECT * FROM USER WHERE ID = ?; [42102-200]
+[2021-08-25 18:08:32] [ERROR] [PatientDAOJDBC:59] Error de Sintaxis en sentencia SQL "UPDATE PATIENT SET USERNAME = ? SET[*] PASSWORD = ? SET FIRST_NAME = ? SET LAST_NAME = ? WHERE ID = ?;"
+Syntax error in SQL statement "UPDATE PATIENT SET USERNAME = ? SET[*] PASSWORD = ? SET FIRST_NAME = ? SET LAST_NAME = ? WHERE ID = ?;"; SQL statement:
+UPDATE PATIENT SET username = ? SET password = ? SET first_name = ? SET last_name = ? WHERE ID = ?; [42000-200]
+[2021-08-25 18:09:57] [ERROR] [PatientDAOJDBC:59] Error de Sintaxis en sentencia SQL "UPDATE PATIENT SET USERNAME = ? SET[*] PASSWORD = ? SET FIRST_NAME = ? SET LAST_NAME = ? WHERE ID = ?;"
+Syntax error in SQL statement "UPDATE PATIENT SET USERNAME = ? SET[*] PASSWORD = ? SET FIRST_NAME = ? SET LAST_NAME = ? WHERE ID = ?;"; SQL statement:
+UPDATE PATIENT SET username = ? SET password = ? SET first_name = ? SET last_name = ? WHERE ID = ?; [42000-200]
+[2021-08-25 18:10:34] [ERROR] [PatientDAOJDBC:59] Error de Sintaxis en sentencia SQL "UPDATE PATIENT SET USERNAME = ? SET[*] PASSWORD = ? SET FIRST_NAME = ? SET LAST_NAME = ? WHERE ID = ?;"
+Syntax error in SQL statement "UPDATE PATIENT SET USERNAME = ? SET[*] PASSWORD = ? SET FIRST_NAME = ? SET LAST_NAME = ? WHERE ID = ?;"; SQL statement:
+UPDATE PATIENT SET username = ? SET password = ? SET first_name = ? SET last_name = ? WHERE ID = ?; [42000-200]
+[2021-08-25 18:11:30] [ERROR] [PatientDAOJDBC:59] Error de Sintaxis en sentencia SQL "UPDATE PATIENT SET USERNAME = ? SET[*] PASSWORD = ? SET FIRST_NAME = ? SET LAST_NAME = ? WHERE ID = ?;"
+Syntax error in SQL statement "UPDATE PATIENT SET USERNAME = ? SET[*] PASSWORD = ? SET FIRST_NAME = ? SET LAST_NAME = ? WHERE ID = ?;"; SQL statement:
+UPDATE PATIENT SET username = ? SET password = ? SET first_name = ? SET last_name = ? WHERE ID = ?; [42000-200]
+[2021-08-25 18:13:20] [ERROR] [PatientDAOJDBC:59] Error de Sintaxis en sentencia SQL "UPDATE PATIENT SET USERNAME = ? SET[*] PASSWORD = ? SET FIRST_NAME = ? SET LAST_NAME = ? WHERE ID = ?;"
+Syntax error in SQL statement "UPDATE PATIENT SET USERNAME = ? SET[*] PASSWORD = ? SET FIRST_NAME = ? SET LAST_NAME = ? WHERE ID = ?;"; SQL statement:
+UPDATE PATIENT SET username = ? SET password = ? SET first_name = ? SET last_name = ? WHERE ID = ?; [42000-200]
+[2021-08-25 18:13:42] [ERROR] [PatientDAOJDBC:59] Columna "SET" no encontrada
+Column "SET" not found; SQL statement:
+UPDATE PATIENT SET username = ?, SET password = ?, SET first_name = ?, SET last_name = ? WHERE ID = ?; [42122-200]

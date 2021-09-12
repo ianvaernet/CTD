@@ -1,0 +1,61 @@
+La idempotencia es la capacidad de realizar una misma acción n cantidad de veces y obtener siempre el mismo resultado. Un ejemplo de aplicación de este principio es el utilizado por las herramientas de infraestructura como código: al aplicar un template se crean los recursos indicados. Ahora bien, si no se realizan modificaciones a dicho template, aplicarlo de forma repetida no produce cambios en los recursos desplegados, obteniéndose como resultado el mismo stack de recursos.
+
+Primero se crea el archivo de configuración o template de Ansible llamado playbook, el cual describe el estado deseado de la infraestructura. En dicho playbook se especifica el/los host de destino y las tareas a aplicar en ellos (y dentro de cada tarea, el módulo a utilizar). Luego, se aplica ese playbook usando el comando ansible-playbook junto con el nombre del archivo. Al ejecutar dicho comando, Ansible se encarga de aprovisionar los recursos indicados en el playbook.
+
+Se enfoca en los resultados
+Opera sobre diferentes nubes
+Se encarga de la infraestructura
+Le interesa el apoyo de la comunidad
+
+
+
+Correcciones:
+- Las regiones del security group y la instancia de EC2 deben ser las mismas: no se especifica así que elegí us-east-1 pero podría ser us-west-2 sin ningún problema.
+
+- En el security group: el puerto de SSH es el 22, no el 23. El puerto 8080 es innecesario. Si no se desea acceder por HTTP/HTTPS también se podrían quitar los puertos 80 y 443.
+
+- El nombre del security group al que se hace referencia en la instancia EC2 debe ser el mismo que se indicó más arriba cuando se lo creó (en este caso, sg_profe en lugar de grupo_creado).
+
+- Se debe asignar una ip pública a la instancia de EC2, la cual utilizaremos para conectarnos mediante SSH.
+
+
+Solución:
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Crear grupo de seguridad con HTTPS, HTTP y SSH
+      ec2_group:
+        name: sg_profe
+        vpc_id: vpc-7a117c07
+        description: sg con las reglas
+        region: us-east-1
+        rules:
+          - proto: tcp
+            ports:
+              - 443
+              - 80
+              - 22
+            cidr_ip: 0.0.0.0/0
+            rule_desc: Acepto todo el trafico
+    - name: Creamos nuestro servidor
+      ec2:
+        region: us-east-1
+        instance_type: t2.micro
+        image: ami-0c2b8ca1dad447f8a
+        instance_tags:
+          Name: Instancia_Profe
+        wait: yes
+        wait_timeout: 500
+        group: sg_profe
+        volumes:
+          - device_name: /dev/xvda
+            volume_type: gp2
+            volume_size: 8
+        vpc_subnet_id: subnet-82bceedd
+        assign_public_ip: yes
+        key_name: millave
+      register: info
+    - name: DNS Publico de nuestro servidor
+      debug:
+        msg: 'La ip publica es {{ info.instances[0].public_ip }} y su DNS es {{ info.instances[0].public_dns_name }}'

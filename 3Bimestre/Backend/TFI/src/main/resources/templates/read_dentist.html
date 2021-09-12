@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Paciente ' + ${dentist.id}"></title>
+</head>
+<body>
+  <h1 th:text="${dentist.firstName + ' ' + dentist.lastName}"></h1>
+</body>
+</html>

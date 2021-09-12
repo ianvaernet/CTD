@@ -1,0 +1,77 @@
+.button {
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-weight: 500;
+  border-radius: 7px;
+  height: 35px;
+  border: 0px;
+  box-shadow: 0px 1px 5px 0px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 3px 1px -2px rgb(0 0 0 / 12%);
+}
+
+/* ===== TYPES ===== */
+.primary {
+  background-color: #1890ff;
+  color: #fafafa !important;
+}
+.primary:hover {
+  background-color: #096dd9;
+}
+.primary:focus {
+  background-color: #096dd9;
+}
+.primary:active {
+  background-color: #096dd9;
+}
+
+.danger {
+  background-color: #f50057;
+  color: #fafafa !important;
+}
+.danger:hover {
+  background-color: #cf1322;
+}
+.danger:focus {
+  background-color: #cf1322;
+}
+.danger:active {
+  background-color: #cf1322;
+}
+
+.warning {
+  background-color: #ffc107;
+}
+.warning:hover {
+  background-color: #d4b106;
+}
+.warning:focus {
+  background-color: #d4b106;
+}
+.warning:active {
+  background-color: #d4b106;
+}
+
+.success {
+  background-color: #4dbd74;
+}
+.success:hover {
+  background-color: #3a9d5d;
+}
+.success:focus {
+  background-color: #3a9d5d;
+}
+.success:active {
+  background-color: #3a9d5d;
+}
+
+/* ===== SIZES ===== */
+.small {
+  font-size: 12px;
+  padding: 5px 10px;
+}
+.medium {
+  font-size: 14px;
+  padding: 7px 15px;
+}
+.large {
+  font-size: 16px;
+  padding: 9px 20px;
+}

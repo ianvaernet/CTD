@@ -3,7 +3,7 @@ package Clase22_Composite;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tren {
+public class Tren implements Geometrico {
     private List<Geometrico> partes;
 
     public Tren() {

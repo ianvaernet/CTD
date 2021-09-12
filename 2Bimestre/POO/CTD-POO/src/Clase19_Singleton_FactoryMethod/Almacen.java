@@ -6,7 +6,7 @@ public class Almacen {
     private static Almacen instance;
     private ArrayList<Producto> productos;
 
-    public Almacen() {
+    private Almacen() {
         this.productos = new ArrayList<Producto>();
     }
 
