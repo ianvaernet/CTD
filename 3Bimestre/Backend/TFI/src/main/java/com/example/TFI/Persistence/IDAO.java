@@ -1,8 +1,8 @@
-package com.example.TFI.DAO;
+package com.example.TFI.Persistence;
 
 import java.util.List;
 
-public interface DAO<T> {
+public interface IDAO<T> {
     public int create(T newObject);
     public T update(int ID, T updatedObject);
     public boolean delete(int id);

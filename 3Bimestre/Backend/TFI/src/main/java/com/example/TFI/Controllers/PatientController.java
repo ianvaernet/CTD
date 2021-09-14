@@ -1,14 +1,12 @@
 package com.example.TFI.Controllers;
 
-import com.example.TFI.DAO.PatientDAOJDBC;
-import com.example.TFI.DAO.H2Database;
-import com.example.TFI.DAO.UserDAOJDBC;
 import com.example.TFI.DTO.PatientDTO;
 import com.example.TFI.DTO.PatientListDTO;
 import com.example.TFI.Models.Patient;
-import com.example.TFI.Services.PatientService;
+import com.example.TFI.Services.IPatientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +18,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/patients")
 public class PatientController {
     private static final Logger logger = Logger.getLogger(PatientController.class);
-    private final PatientService patientService;
+    @Autowired
+    private IPatientService patientService;
 
-    public PatientController() {
-        this.patientService = new PatientService(H2Database.getConnection(), new PatientDAOJDBC(H2Database.getConnection()), new UserDAOJDBC(H2Database.getConnection()));
-    }
+//    public PatientController() {
+//        this.patientService = new PatientService(H2Database.getConnection(), new PatientRepositoryJDBC(H2Database.getConnection()), new IUserRepositoryJDBC(H2Database.getConnection()));
+//    }
 
     @GetMapping
     @ResponseBody

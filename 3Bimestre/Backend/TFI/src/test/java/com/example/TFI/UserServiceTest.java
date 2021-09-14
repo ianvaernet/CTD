@@ -1,22 +1,26 @@
 package com.example.TFI;
 
-import com.example.TFI.DAO.DentistDAOJDBC;
-import com.example.TFI.DAO.H2Database;
-import com.example.TFI.DAO.UserDAOJDBC;
 import com.example.TFI.Models.Dentist;
 import com.example.TFI.Models.Role;
 import com.example.TFI.Models.User;
-import com.example.TFI.Services.DentistService;
-import com.example.TFI.Services.UserService;
+import com.example.TFI.Services.IDentistService;
+import com.example.TFI.Services.IUserService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 public class UserServiceTest {
-    private final UserService userService = new UserService(new UserDAOJDBC(H2Database.getInMemoryConnection()));
-    private final DentistService dentistService = new DentistService(H2Database.getInMemoryConnection(), new DentistDAOJDBC(H2Database.getInMemoryConnection()), new UserDAOJDBC(H2Database.getInMemoryConnection()));
+    @Autowired
+    private IUserService userService;
+    @Autowired
+    private IDentistService dentistService;
+//    private final UserService userService = new UserService(new UserRepositoryJDBC(H2Database.getInMemoryConnection()));
+//    private final DentistService dentistService = new DentistService(H2Database.getInMemoryConnection(), new DentistRepositoryJDBC(H2Database.getInMemoryConnection()), new UserRepositoryJDBC(H2Database.getInMemoryConnection()));
 
     @Test
     public void login() throws SQLException {
@@ -31,8 +35,8 @@ public class UserServiceTest {
     public void loginWithInexistingUsername() throws SQLException {
         Dentist dentist = new Dentist("test_user_2", "hola1234",3785, "Ian", "Vaernet");
         dentistService.createDentist(dentist);
-        User userWithInexistinUsername = userService.login("fake_user", "hola1234");
-        assertNull(userWithInexistinUsername);
+        User userWithWrongUsername = userService.login("fake_user", "hola1234");
+        assertNull(userWithWrongUsername);
     }
     
     @Test

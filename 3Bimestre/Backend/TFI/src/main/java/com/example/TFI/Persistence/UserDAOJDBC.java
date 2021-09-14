@@ -1,20 +1,16 @@
-package com.example.TFI.DAO;
+package com.example.TFI.Persistence;
 
-import com.example.TFI.Models.Patient;
 import com.example.TFI.Models.Role;
 import com.example.TFI.Models.User;
 import org.apache.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOJDBC implements UserDAO {
+public class UserDAOJDBC implements IUserDAO {
     private static final Logger logger = Logger.getLogger(UserDAOJDBC.class);
-    private final Connection dbConnection;
-
-//    public UserDAOJDBC() {
-//        this.dbConnection = H2Database.getConnection();
-//    }
+    private Connection dbConnection;
 
     public UserDAOJDBC(Connection dbConnection) {
         this.dbConnection = dbConnection;
@@ -65,6 +61,27 @@ public class UserDAOJDBC implements UserDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public boolean changePassword(int id, String newPassword) {
+        logger.debug("Cambiando contraseña...");
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE USERS SET password = ? WHERE ID = ?;");
+            statement.setString(1, newPassword);
+            statement.setInt(2, id);
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows > 0) {
+                logger.debug("Contraseña actualizada con éxito para el usuario con ID = " + id);
+                return true;
+            } else {
+                System.out.println("No existe ningún usuario con el ID proporcionado");
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override

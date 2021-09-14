@@ -1,4 +1,4 @@
-package com.example.TFI.DAO;
+package com.example.TFI.Persistence;
 
 import com.example.TFI.Models.Dentist;
 import org.apache.log4j.Logger;
@@ -7,13 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DentistDAOJDBC implements DAO<Dentist> {
+public class DentistDAOJDBC implements IDAO<Dentist> {
     private static final Logger logger = Logger.getLogger(DentistDAOJDBC.class);
-    private final Connection dbConnection;
-
-//    public DentistDAOJDBC() {
-//        this.dbConnection = H2Database.getConnection();
-//    }
+    private Connection dbConnection;
 
     public DentistDAOJDBC(Connection dbConnection) {
         this.dbConnection = dbConnection;

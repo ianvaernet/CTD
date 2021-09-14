@@ -1,14 +1,12 @@
 package com.example.TFI.Controllers;
 
-import com.example.TFI.DAO.DentistDAOJDBC;
-import com.example.TFI.DAO.H2Database;
-import com.example.TFI.DAO.UserDAOJDBC;
 import com.example.TFI.DTO.DentistDTO;
 import com.example.TFI.DTO.DentistListDTO;
 import com.example.TFI.Models.Dentist;
-import com.example.TFI.Services.DentistService;
+import com.example.TFI.Services.IDentistService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +18,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/dentists")
 public class DentistController {
     private static final Logger logger = Logger.getLogger(DentistController.class);
-    private final DentistService dentistService;
+    @Autowired
+    private IDentistService dentistService;
 
-    public DentistController() {
-        this.dentistService = new DentistService(H2Database.getConnection(), new DentistDAOJDBC(H2Database.getConnection()), new UserDAOJDBC(H2Database.getConnection()));
-    }
+//    public DentistController() {
+//        this.dentistService = new DentistService(H2Database.getConnection(), new DentistRepositoryJDBC(H2Database.getConnection()), new IUserRepositoryJDBC(H2Database.getConnection()));
+//    }
 
     @GetMapping
     @ResponseBody

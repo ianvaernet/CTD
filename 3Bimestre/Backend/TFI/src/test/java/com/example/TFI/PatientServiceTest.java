@@ -1,25 +1,28 @@
 package com.example.TFI;
 
-import com.example.TFI.DAO.H2Database;
-import com.example.TFI.DAO.PatientDAOJDBC;
-import com.example.TFI.DAO.UserDAOJDBC;
 import com.example.TFI.Models.Patient;
-import com.example.TFI.Services.PatientService;
+import com.example.TFI.Services.IPatientService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 public class PatientServiceTest {
-    private PatientService patientService = new PatientService(H2Database.getInMemoryConnection(), new PatientDAOJDBC(H2Database.getInMemoryConnection()), new UserDAOJDBC(H2Database.getInMemoryConnection()));
+    @Autowired
+    private IPatientService patientService;
+//    private PatientService patientService = new PatientService(H2Database.getInMemoryConnection(), new PatientRepositoryJDBC(H2Database.getInMemoryConnection()), new UserRepositoryJDBC(H2Database.getInMemoryConnection()));
 
     @Test
     public void createPatient() throws SQLException {
         Patient patient = new Patient("test_patient_1", "hola1234", "Ian", "Vaernet");
-        patientService.createPatient(patient);
-        assertTrue(patient.getId() > 0);
+        Patient createdPatient = patientService.createPatient(patient);
+        assertNotNull(createdPatient);
+        assertTrue(createdPatient.getId() > 0);
     }
 
     @Test

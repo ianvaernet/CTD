@@ -1,4 +1,4 @@
-package com.example.TFI.DAO;
+package com.example.TFI.Persistence;
 
 import com.example.TFI.Models.Patient;
 import org.apache.log4j.Logger;
@@ -7,13 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatientDAOJDBC implements DAO<Patient> {
+public class PatientDAOJDBC implements IDAO<Patient> {
     private static final Logger logger = Logger.getLogger(PatientDAOJDBC.class);
-    private final Connection dbConnection;
-
-//    public PatientDAOJDBC() {
-//        this.dbConnection = H2Database.getConnection();
-//    }
+    private Connection dbConnection;
 
     public PatientDAOJDBC(Connection dbConnection) {
         this.dbConnection = dbConnection;
@@ -42,22 +38,22 @@ public class PatientDAOJDBC implements DAO<Patient> {
     @Override
     public Patient update(int id, Patient updatedPatient) {
         logger.debug("Actualizando paciente...");
-//        try {
-//            PreparedStatement statement = dbConnection.prepareStatement("UPDATE PATIENTS SET first_name = ?, last_name = ? WHERE id = ?;");
-//            statement.setString(1, updatedPatient.getFirstName());
-//            statement.setString(2, updatedPatient.getLastName());
-//            statement.setInt(3, id);
-//            int affectedRows = statement.executeUpdate();
-//            if (affectedRows > 0) {
-//                logger.debug("Paciente actualizado con éxito: " + updatedPatient);
-//                return updatedPatient;
-//            } else {
-//                logger.warn("No existe ningún paciente con el ID proporcionado");
-//            }
-//        } catch (SQLException e) {
-//            logger.error(e.getMessage());
-//            e.printStackTrace();
-//        }
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE PATIENTS SET first_name = ?, last_name = ? WHERE id = ?;");
+            statement.setString(1, updatedPatient.getFirstName());
+            statement.setString(2, updatedPatient.getLastName());
+            statement.setInt(3, id);
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows > 0) {
+                logger.debug("Paciente actualizado con éxito: " + updatedPatient);
+                return updatedPatient;
+            } else {
+                logger.warn("No existe ningún paciente con el ID proporcionado");
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
         return updatedPatient;
     }
 

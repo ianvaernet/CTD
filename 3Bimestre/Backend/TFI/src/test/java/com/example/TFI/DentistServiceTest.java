@@ -1,19 +1,21 @@
 package com.example.TFI;
 
-import com.example.TFI.DAO.DentistDAOJDBC;
-import com.example.TFI.DAO.H2Database;
-import com.example.TFI.DAO.UserDAOJDBC;
 import com.example.TFI.Models.Dentist;
-import com.example.TFI.Services.DentistService;
+import com.example.TFI.Services.IDentistService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 public class DentistServiceTest {
-    private final DentistService dentistService = new DentistService(H2Database.getInMemoryConnection(), new DentistDAOJDBC(H2Database.getInMemoryConnection()), new UserDAOJDBC(H2Database.getInMemoryConnection()));
+    @Autowired
+    private IDentistService dentistService;
+//    private final DentistService dentistService = new DentistService(H2Database.getInMemoryConnection(), new DentistRepositoryJDBC(H2Database.getInMemoryConnection()), new UserRepositoryJDBC(H2Database.getInMemoryConnection()));
 
     @Test
     public void createDentist() throws SQLException {
