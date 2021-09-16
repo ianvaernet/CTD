@@ -3,17 +3,20 @@ package com.example.TFI.Persistence;
 import com.example.TFI.Models.Role;
 import com.example.TFI.Models.User;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class UserDAOJDBC implements IUserDAO {
     private static final Logger logger = Logger.getLogger(UserDAOJDBC.class);
+    @Autowired
     private Connection dbConnection;
 
-    public UserDAOJDBC(Connection dbConnection) {
-        this.dbConnection = dbConnection;
+    public UserDAOJDBC() {
     }
 
     @Override
@@ -22,7 +25,7 @@ public class UserDAOJDBC implements IUserDAO {
         int id = 0;
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO USERS (role, username, password, first_name, last_name) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, newUser.getRole().toString());
+            statement.setInt(1, newUser.getRole().ordinal());
             statement.setString(2, newUser.getUsername());
             statement.setString(3, newUser.getPassword());
             statement.setString(4, newUser.getFirstName());
@@ -113,7 +116,7 @@ public class UserDAOJDBC implements IUserDAO {
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                user = new User(Role.valueOf(result.getString("role")), result.getString("username"), result.getString("password"), result.getString("first_name"), result.getString("last_name"));
+                user = new User(Role.values()[result.getInt("role")], result.getString("username"), result.getString("password"), result.getString("first_name"), result.getString("last_name"));
                 logger.debug(user);
             } else {
                 logger.warn("No existe ningún usuario con el ID proporcionado");
@@ -134,7 +137,7 @@ public class UserDAOJDBC implements IUserDAO {
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                user = new User(Role.valueOf(result.getString("role")), username, result.getString("password"), result.getString("first_name"), result.getString("last_name"));
+                user = new User(Role.values()[result.getInt("role")], username, result.getString("password"), result.getString("first_name"), result.getString("last_name"));
                 user.setId(result.getInt("id"));
                 logger.debug(user);
             } else {
@@ -155,7 +158,7 @@ public class UserDAOJDBC implements IUserDAO {
             Statement statement = dbConnection.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM USERS;");
             while (result.next()) {
-                User user = new User(Role.valueOf(result.getString("role")), result.getString("username"), result.getString("password"), result.getString("first_name"), result.getString("last_name"));
+                User user = new User(Role.values()[result.getInt("role")], result.getString("username"), result.getString("password"), result.getString("first_name"), result.getString("last_name"));
                 user.setId(result.getInt("id"));
                 users.add(user);
                 logger.debug(user);

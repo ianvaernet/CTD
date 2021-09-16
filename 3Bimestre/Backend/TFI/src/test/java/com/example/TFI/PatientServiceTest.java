@@ -1,7 +1,7 @@
 package com.example.TFI;
 
 import com.example.TFI.Models.Patient;
-import com.example.TFI.Services.IPatientService;
+import com.example.TFI.Services.PatientService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,13 +14,19 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class PatientServiceTest {
     @Autowired
-    private IPatientService patientService;
-//    private PatientService patientService = new PatientService(H2Database.getInMemoryConnection(), new PatientRepositoryJDBC(H2Database.getInMemoryConnection()), new UserRepositoryJDBC(H2Database.getInMemoryConnection()));
+    private PatientService patientService;
 
     @Test
     public void createPatient() throws SQLException {
         Patient patient = new Patient("test_patient_1", "hola1234", "Ian", "Vaernet");
         Patient createdPatient = patientService.createPatient(patient);
+        assertNotNull(createdPatient);
+        assertTrue(createdPatient.getId() > 0);
+    }
+    @Test
+    public void createPatientWithDAO() throws SQLException {
+        Patient patient = new Patient("test_patient_dao_1", "hola1234", "Ian", "Vaernet");
+        Patient createdPatient = patientService.createPatientWithDAO(patient);
         assertNotNull(createdPatient);
         assertTrue(createdPatient.getId() > 0);
     }

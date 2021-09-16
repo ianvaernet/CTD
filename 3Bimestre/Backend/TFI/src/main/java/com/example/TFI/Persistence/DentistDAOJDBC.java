@@ -2,17 +2,20 @@ package com.example.TFI.Persistence;
 
 import com.example.TFI.Models.Dentist;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class DentistDAOJDBC implements IDAO<Dentist> {
     private static final Logger logger = Logger.getLogger(DentistDAOJDBC.class);
+    @Autowired
     private Connection dbConnection;
 
-    public DentistDAOJDBC(Connection dbConnection) {
-        this.dbConnection = dbConnection;
+    public DentistDAOJDBC() {
     }
 
     @Override

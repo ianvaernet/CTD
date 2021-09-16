@@ -2,17 +2,20 @@ package com.example.TFI.Persistence;
 
 import com.example.TFI.Models.Patient;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class PatientDAOJDBC implements IDAO<Patient> {
     private static final Logger logger = Logger.getLogger(PatientDAOJDBC.class);
+    @Autowired
     private Connection dbConnection;
 
-    public PatientDAOJDBC(Connection dbConnection) {
-        this.dbConnection = dbConnection;
+    public PatientDAOJDBC() {
     }
 
     @Override
@@ -65,7 +68,7 @@ public class PatientDAOJDBC implements IDAO<Patient> {
             statement.setInt(1, id);
             int affectedRows = statement.executeUpdate();
             if (affectedRows > 0) {
-                logger.debug("Paciente eliminado con éxito: ID="+id);
+                logger.debug("Paciente eliminado con éxito: ID=" + id);
                 return true;
             } else {
                 logger.warn("No existe ningún paciente con el ID proporcionado");

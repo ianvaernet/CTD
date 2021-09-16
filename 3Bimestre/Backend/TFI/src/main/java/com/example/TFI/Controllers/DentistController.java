@@ -3,7 +3,7 @@ package com.example.TFI.Controllers;
 import com.example.TFI.DTO.DentistDTO;
 import com.example.TFI.DTO.DentistListDTO;
 import com.example.TFI.Models.Dentist;
-import com.example.TFI.Services.IDentistService;
+import com.example.TFI.Services.DentistService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,7 @@ import java.util.stream.Collectors;
 public class DentistController {
     private static final Logger logger = Logger.getLogger(DentistController.class);
     @Autowired
-    private IDentistService dentistService;
-
-//    public DentistController() {
-//        this.dentistService = new DentistService(H2Database.getConnection(), new DentistRepositoryJDBC(H2Database.getConnection()), new IUserRepositoryJDBC(H2Database.getConnection()));
-//    }
+    private DentistService dentistService;
 
     @GetMapping
     @ResponseBody
