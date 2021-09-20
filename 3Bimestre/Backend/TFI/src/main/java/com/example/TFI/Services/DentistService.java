@@ -8,10 +8,9 @@ import com.example.TFI.Models.User;
 import com.example.TFI.Persistence.IUserDAO;
 import com.example.TFI.Persistence.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -60,9 +59,13 @@ public class DentistService {
     }
 
     @Transactional
-    public Dentist updateDentist(int id, Dentist dentist) {
-        dentist.setId(id);
-        User user = userRepository.save(dentist);
+    public Dentist updateDentist(int id, Dentist updatedDentist) {
+        Dentist dentist = getDentist(id);
+        if (updatedDentist.getUsername() != null) dentist.setUsername(updatedDentist.getUsername());
+        if (updatedDentist.getFirstName() != null) dentist.setFirstName(updatedDentist.getFirstName());
+        if (updatedDentist.getLastName() != null) dentist.setLastName(updatedDentist.getLastName());
+        if (updatedDentist.getLicenseNumber() != null) dentist.setLicenseNumber(updatedDentist.getLicenseNumber());
+        userRepository.save(dentist);
         dentist = dentistRepository.save(dentist);
         return dentist;
     }

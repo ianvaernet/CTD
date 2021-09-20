@@ -1,10 +1,7 @@
 package com.example.TFI.Services;
 
-import com.example.TFI.Models.Dentist;
-import com.example.TFI.Models.Role;
+import com.example.TFI.Models.*;
 import com.example.TFI.Persistence.IDAO;
-import com.example.TFI.Models.Patient;
-import com.example.TFI.Models.User;
 import com.example.TFI.Persistence.IPatientRepository;
 import com.example.TFI.Persistence.IUserDAO;
 import com.example.TFI.Persistence.IUserRepository;
@@ -61,9 +58,19 @@ public class PatientService {
     }
 
     @Transactional
-    public Patient updatePatient(int id, Patient patient) {
-        patient.setId(id);
-        User user = userRepository.save(patient);
+    public Patient updatePatient(int id, Patient updatedPatient) {
+        Patient patient = getPatient(id);
+        if (updatedPatient.getUsername() != null) patient.setUsername(updatedPatient.getUsername());
+        if (updatedPatient.getFirstName() != null) patient.setFirstName(updatedPatient.getFirstName());
+        if (updatedPatient.getLastName() != null) patient.setLastName(updatedPatient.getLastName());
+        if (updatedPatient.getDNI() != null) patient.setDNI(updatedPatient.getDNI());
+        if (updatedPatient.getAddress() != null) {
+            if (updatedPatient.getAddress().getStreet() != null) patient.getAddress().setStreet(updatedPatient.getAddress().getStreet());
+            if (updatedPatient.getAddress().getNumber() != null) patient.getAddress().setNumber(updatedPatient.getAddress().getNumber());
+            if (updatedPatient.getAddress().getFloor() != null) patient.getAddress().setFloor(updatedPatient.getAddress().getFloor());
+            if (updatedPatient.getAddress().getApartment() != null) patient.getAddress().setApartment(updatedPatient.getAddress().getApartment());
+        }
+        userRepository.save(patient);
         patient = patientRepository.save(patient);
         return patient;
     }
@@ -109,9 +116,7 @@ public class PatientService {
     }
 
     public Patient getPatient(int id) {
-        Optional<Patient> patient = patientRepository.findById(id);
-        if (patient.isEmpty()) return null;
-        return patient.get();
+        return patientRepository.get(id);
     }
 
     public Patient getPatientWithDAO(int id) {

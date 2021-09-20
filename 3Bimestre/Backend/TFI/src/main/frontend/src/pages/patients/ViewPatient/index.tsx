@@ -1,6 +1,6 @@
 import { Button } from '@atoms';
-import { Direction, IPatient, Mode } from '@types';
-import { Form, notification, Row } from 'antd';
+import { Direction, InputType, IPatient, Mode } from '@types';
+import { Col, Form, notification, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router';
 import { changeMode, getButtonType, getButtonText } from 'src/utils';
@@ -18,8 +18,9 @@ export const ViewPatient: React.FC = () => {
 
   const getData = async () => {
     const patientData = await getPatient(id);
-    setPatient(patientData);
-    form.setFieldsValue(patientData);
+    if (patientData.address?.floor === 0) delete patientData.address.floor;
+    setPatient({ ...patientData, ...patientData.address });
+    form.setFieldsValue({ ...patientData, ...patientData.address });
   };
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export const ViewPatient: React.FC = () => {
 
   const onValuesChange = (values: any) => form.setFieldsValue((patient: IPatient) => ({ ...patient, ...values }));
 
-  const onSubmit = async (data: IPatient) => {
+  const onSubmit = async (data: any) => {
     if (mode === Mode.Delete) {
       try {
         await deletePatient(id);
@@ -46,6 +47,12 @@ export const ViewPatient: React.FC = () => {
     if (mode === Mode.View) setMode(Mode.Delete);
     if (mode === Mode.Edit) {
       try {
+        data.address = {
+          street: data.street,
+          number: data.number,
+          floor: data.floor,
+          apartment: data.apartment,
+        };
         await updatePatient(id, data);
         notification.success({
           message: 'Paciente actualizado con éxito',
@@ -71,9 +78,27 @@ export const ViewPatient: React.FC = () => {
         onValuesChange={onValuesChange}
         onFinish={onSubmit}
       >
+        <Input name="username" label="Usuario" disabled={isDisabled} required />
         <Input name="firstName" label="Nombre" disabled={isDisabled} required />
         <Input name="lastName" label="Apellido" disabled={isDisabled} required />
-        <Input name="username" label="Usuario" disabled={isDisabled} required />
+        <Input type={InputType.Number} name="dni" label="DNI" disabled={isDisabled} required />
+        <h2 className="mt-1">Dirección</h2>
+        <Row justify="space-between" className="width-100">
+          <Col span={16}>
+            <Input name="street" label="Calle" disabled={isDisabled} className="mt-0" required />
+          </Col>
+          <Col span={7}>
+            <Input type={InputType.Number} name="number" label="Número" disabled={isDisabled} className="mt-0" required />
+          </Col>
+        </Row>
+        <Row justify="space-between" className="width-100">
+          <Col span={11}>
+            <Input type={InputType.Number} name="floor" label="Piso" disabled={isDisabled} />
+          </Col>
+          <Col span={11}>
+            <Input name="apartment" label="Departamento" disabled={isDisabled} />
+          </Col>
+        </Row>
         <Row justify="space-between" className="width-100 mt-1">
           <Button type={getButtonType(Direction.Left, mode)} htmlType="submit">
             {getButtonText(Direction.Left, mode)}

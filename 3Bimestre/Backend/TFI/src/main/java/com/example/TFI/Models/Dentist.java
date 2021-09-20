@@ -1,16 +1,16 @@
 package com.example.TFI.Models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "dentists")
 public class Dentist extends User {
-//    @Id
-//    private int id;
-    private int licenseNumber;
-//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
-//    private User user;
+    @Column(nullable = false, unique = true)
+    private Integer licenseNumber;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "dentist_id")
+    private List<Appointment> appointments;
 
     public Dentist() {
     }
@@ -20,11 +20,11 @@ public class Dentist extends User {
         this.licenseNumber = licenseNumber;
     }
 
-    public int getLicenseNumber() {
+    public Integer getLicenseNumber() {
         return licenseNumber;
     }
 
-    public void setLicenseNumber(int licenseNumber) {
+    public void setLicenseNumber(Integer licenseNumber) {
         this.licenseNumber = licenseNumber;
     }
 

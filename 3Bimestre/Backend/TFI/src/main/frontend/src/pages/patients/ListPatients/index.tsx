@@ -15,9 +15,9 @@ const columns: ColumnsType<IPatient> = [
     sorter: (patient1: IPatient, patient2: IPatient) => (patient1.fullName > patient2.fullName ? 1 : -1),
   },
   {
-    title: 'Usuario',
-    dataIndex: 'username',
-    sorter: (patient1: IPatient, patient2: IPatient) => (patient1.username > patient2.username ? 1 : -1),
+    title: 'DNI',
+    dataIndex: 'dni',
+    sorter: (patient1: IPatient, patient2: IPatient) => (patient1.DNI - patient2.DNI),
   },
   {
     title: 'Ver',

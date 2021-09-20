@@ -9,27 +9,22 @@ import { Link } from 'react-router-dom';
 
 const columns: ColumnsType<IDentist> = [
   {
-    title: 'Nº licencia',
-    dataIndex: 'licenseNumber',
-    sorter: (dentist1: IDentist, dentist2: IDentist) => (dentist1.licenseNumber > dentist2.licenseNumber ? 1 : -1),
-  },
-  {
     title: 'Nombre y apellido',
     dataIndex: 'fullName',
     defaultSortOrder: 'ascend',
     sorter: (dentist1: IDentist, dentist2: IDentist) => (dentist1.fullName > dentist2.fullName ? 1 : -1),
   },
   {
-    title: 'Usuario',
-    dataIndex: 'username',
-    sorter: (dentist1: IDentist, dentist2: IDentist) => (dentist1.username > dentist2.username ? 1 : -1),
+    title: 'Nº licencia',
+    dataIndex: 'licenseNumber',
+    sorter: (dentist1: IDentist, dentist2: IDentist) => dentist1.licenseNumber - dentist2.licenseNumber,
   },
   {
     title: 'Ver',
     dataIndex: 'id',
     align: 'center',
     render: (id) => (
-      <Link to={'odontologos/' + id + '?mode=view'}>
+      <Link to={'odontologos/' + id + '?mode=view'} key={'see' + id}>
         <Button shape="circle" className="bg-info table-button" icon={<EyeFilled className="table-icon color-dark" />}></Button>
       </Link>
     ),
@@ -39,7 +34,7 @@ const columns: ColumnsType<IDentist> = [
     dataIndex: 'id',
     align: 'center',
     render: (id) => (
-      <Link to={'odontologos/' + id + '?mode=edit'}>
+      <Link to={'odontologos/' + id + '?mode=edit'} key={'edit' + id}>
         <Button shape="circle" className="bg-warning" icon={<EditFilled className="table-icon color-dark" />}></Button>
       </Link>
     ),
@@ -49,7 +44,7 @@ const columns: ColumnsType<IDentist> = [
     dataIndex: 'id',
     align: 'center',
     render: (id) => (
-      <Link to={'odontologos/' + id + '?mode=delete'}>
+      <Link to={'odontologos/' + id + '?mode=delete'} key={'delete' + id}>
         <Button shape="circle" className="bg-danger" icon={<DeleteFilled className="table-icon color-dark" />}></Button>
       </Link>
     ),

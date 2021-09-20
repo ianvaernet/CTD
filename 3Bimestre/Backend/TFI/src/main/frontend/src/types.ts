@@ -43,16 +43,31 @@ export enum Role {
 
 // =============================================================
 
-export interface IDentist extends IUser {
+export interface IAddress {
+  street: string;
+  number: number;
+  floor?: number;
+  apartment?: string;
+}
+
+export interface IDentist {
+  fullName: string;
   licenseNumber: number;
 }
 
-export interface IPatient extends IUser {}
+export interface ILoginData {
+  username: string;
+  password: string;
+}
+export interface IPatient {
+  fullName: string;
+  DNI: number;
+  address?: IAddress;
+}
 
 export interface IUser {
   firstName: string;
   lastName: string;
-  fullName: string;
   username: string;
   role: Role;
 }

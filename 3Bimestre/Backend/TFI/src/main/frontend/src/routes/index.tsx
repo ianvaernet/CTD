@@ -6,8 +6,7 @@ import { Role } from '@types';
 import { Layout } from '@templates';
 
 export function Navigator() {
-  // const { user } = useUserContext();
-  const user = { role: Role.ADMIN };
+  const { user } = useUserContext();
   const routes = user?.role ? privateRoutes(user.role) : publicRoutes;
 
   const navigation = (

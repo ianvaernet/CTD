@@ -34,3 +34,4 @@ build/
 
 ### Logs ###
 ./info.log
+info.log

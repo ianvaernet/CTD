@@ -7,10 +7,12 @@ import com.example.TFI.Services.PatientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +48,10 @@ public class PatientController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El nombre de usuario ingresado ya existe");
             PatientDTO patientDTO = new ObjectMapper().convertValue(patient, PatientDTO.class);
             return ResponseEntity.ok(patientDTO);
+        } catch (DataIntegrityViolationException error) {
+            String errorMessage = "El nombre de usuario ya existe";
+            if (error.getMessage() != null && error.getMessage().contains("DNI")) errorMessage = "Ya existe un paciente con el mismo DNI";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         } catch (Exception error) {
             logger.error(error.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -73,7 +79,13 @@ public class PatientController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe un paciente con el ID proporcionado");
             PatientDTO patientDTO = new ObjectMapper().convertValue(patient, PatientDTO.class);
             return ResponseEntity.ok(patientDTO);
+        } catch (DataIntegrityViolationException error) {
+            String errorMessage = "El nombre de usuario ya existe";
+            if (error.getMessage() != null && error.getMessage().contains("DNI")) errorMessage = "Ya existe un paciente con el mismo DNI";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+
         } catch (Exception error) {
+            logger.error(error.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -88,6 +100,7 @@ public class PatientController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe un paciente con el ID proporcionado");
             return ResponseEntity.ok(true);
         } catch (Exception error) {
+            logger.error(error.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

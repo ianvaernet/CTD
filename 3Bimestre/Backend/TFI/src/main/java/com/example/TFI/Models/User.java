@@ -11,7 +11,7 @@ public class User {
     private int id;
     @Column(nullable = false)
     private Role role;
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private String password;

@@ -71,10 +71,10 @@ export const ViewDentist: React.FC = () => {
         onValuesChange={onValuesChange}
         onFinish={onSubmit}
       >
-        <Input type={InputType.Number} name="licenseNumber" label="Nº de licencia" disabled={isDisabled} required />
+        <Input name="username" label="Usuario" disabled={isDisabled} required />
         <Input name="firstName" label="Nombre" disabled={isDisabled} required />
         <Input name="lastName" label="Apellido" disabled={isDisabled} required />
-        <Input name="username" label="Usuario" disabled={isDisabled} required />
+        <Input type={InputType.Number} name="licenseNumber" label="Nº de licencia" disabled={isDisabled} required />
         <Row justify="space-between" className="width-100 mt-1">
           <Button type={getButtonType(Direction.Left, mode)} htmlType="submit">
             {getButtonText(Direction.Left, mode)}

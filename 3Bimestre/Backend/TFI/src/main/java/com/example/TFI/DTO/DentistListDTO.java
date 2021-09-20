@@ -6,6 +6,5 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class DentistListDTO {
     public int id;
     public int licenseNumber;
-    public String username;
     public String fullName;
 }

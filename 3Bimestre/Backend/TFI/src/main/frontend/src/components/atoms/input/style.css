@@ -1,0 +1,6 @@
+.ant-form-item-explain {
+    display: none;
+}
+.ant-form-item-has-error .ant-form-item-explain {
+    display: block;
+}

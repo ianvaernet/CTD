@@ -7,6 +7,7 @@ import com.example.TFI.Services.DentistService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,11 @@ public class DentistController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El nombre de usuario ingresado ya existe");
             DentistDTO dentistDTO = new ObjectMapper().convertValue(dentist, DentistDTO.class);
             return ResponseEntity.ok(dentistDTO);
+        } catch (DataIntegrityViolationException error) {
+            String errorMessage = "El nombre de usuario ya existe";
+            if (error.getMessage() != null && error.getMessage().contains("LICENSE_NUMBER")) errorMessage = "Ya existe un odontólogo con el mismo Nº de licencia";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+
         } catch (Exception error) {
             logger.error(error.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -73,7 +79,12 @@ public class DentistController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe un odontólogo con el ID proporcionado");
             DentistDTO dentistDTO = new ObjectMapper().convertValue(dentist, DentistDTO.class);
             return ResponseEntity.ok(dentistDTO);
+        } catch (DataIntegrityViolationException error) {
+            String errorMessage = "El nombre de usuario ya existe";
+            if (error.getMessage() != null && error.getMessage().contains("LICENSE_NUMBER")) errorMessage = "Ya existe un odontólogo con el mismo Nº de licencia";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         } catch (Exception error) {
+            logger.error(error.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -88,6 +99,7 @@ public class DentistController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe un odontólogo con el ID proporcionado");
             return ResponseEntity.ok(true);
         } catch (Exception error) {
+            logger.error(error.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

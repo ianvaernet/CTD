@@ -40,11 +40,11 @@ export const AddDentist: React.FC = () => {
         onValuesChange={onValuesChange}
         onFinish={onSubmit}
       >
-        <Input type={InputType.Number} name="licenseNumber" label="Nº de licencia" required />
-        <Input name="firstName" label="Nombre" required />
-        <Input name="lastName" label="Apellido" required />
         <Input name="username" label="Usuario" required />
         <Input name="password" label="Contraseña" required />
+        <Input name="firstName" label="Nombre" required />
+        <Input name="lastName" label="Apellido" required />
+        <Input type={InputType.Number} name="licenseNumber" label="Nº de licencia" required />
         <Row justify="space-between" className="width-100 mt-1">
           <Button type={ButtonType.Primary} htmlType="submit" className="m-auto">
             AÑADIR ODONTÓLOGO

@@ -11,18 +11,17 @@ type Props = FormItemProps & {
   help?: string;
   required?: boolean;
   disabled?: boolean;
-//   initialValue?: string;
   formProps?: FormItemProps;
   inputProps?: InputProps;
 };
 
 export const Input: React.FC<Props> = ({ type, name, label, required, disabled, inputProps, ...props }: Props) => {
   return (
-    <Form.Item name={name} label={label} required rules={[{ required }]} hasFeedback={!disabled} className="mt-1" {...props}>
+    <Form.Item name={name} label={label} required={required} rules={[{ required }]} hasFeedback={!disabled} className={"mt-1 "+ props.className} {...props}>
       {type === InputType.Number ? (
-        <InputNumber placeholder={label} disabled={disabled} className="width-100" />
+        <InputNumber placeholder={label} disabled={disabled} className={"width-100 " + props.className} />
       ) : (
-        <AntdInput placeholder={label} disabled={disabled} {...inputProps} />
+        <AntdInput placeholder={label} disabled={disabled} className={props.className} {...inputProps} />
       )}
     </Form.Item>
   );

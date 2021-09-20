@@ -1,0 +1,10 @@
+INSERT INTO USERS (username, password, role, first_name, last_name) VALUES ('admin', 'admin', 0, 'Usuario', 'Administrador'), ('odontologo', 'odontologo', 1, 'Usuario', 'Odontologo'), ('odontologo2', 'odontologo2', 1, 'Usuario', 'Odontologo'), ('odontologo3', 'odontologo3', 1, 'Usuario', 'Odontologo'), ('paciente', 'paciente', 2, 'Usuario', 'Paciente'), ('paciente2', 'paciente2', 2, 'Usuario', 'Paciente'), ('paciente3', 'paciente3', 2, 'Usuario', 'Paciente');
+INSERT INTO DENTISTS (id, license_number) VALUES (2, 2654);
+INSERT INTO DENTISTS (id, license_number) VALUES (3, 9761);
+INSERT INTO DENTISTS (id, license_number) VALUES (4, 7230);
+INSERT INTO ADDRESSES (street, number) VALUES ('Av. Alberdi', 1450);
+INSERT INTO ADDRESSES (street, number) VALUES ('Av. San Martin', 765);
+INSERT INTO ADDRESSES (street, number) VALUES ('Juan B. Justo', 2130);
+INSERT INTO PATIENTS (id, DNI, entry_date, address_id) VALUES (5, 12345678, current_timestamp, 1);
+INSERT INTO PATIENTS (id, DNI, entry_date, address_id) VALUES (6, 31519540, current_timestamp, 2);
+INSERT INTO PATIENTS (id, DNI, entry_date, address_id) VALUES (7, 40773512, current_timestamp, 3);

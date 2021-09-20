@@ -33,35 +33,29 @@ public class DentistServiceTest {
 
     @Test
     public void getDentist() {
-        Dentist dentist = new Dentist("test_dentist_2", "hola1234",3785, "Ian", "Vaernet");
-        dentist = dentistService.createDentist(dentist);
-        Dentist readedDentist = dentistService.getDentist(dentist.getId());
+        Dentist readedDentist = dentistService.getDentist(2);
         assertNotNull(readedDentist);
     }
     @Test
     public void getDentistWithDAO() throws SQLException {
-        Dentist dentist = new Dentist("test_dentist_dao_2", "hola1234",3785, "Ian", "Vaernet");
-        dentist = dentistService.createDentistWithDAO(dentist);
-        Dentist readedDentist = dentistService.getDentist(dentist.getId());
+        Dentist readedDentist = dentistService.getDentist(2);
         assertNotNull(readedDentist);
     }
 
     @Test
     public void updateDentist() {
-        Dentist dentist = new Dentist("test_dentist_3", "hola1234",3785, "Ian", "Vaernet");
-        dentistService.createDentist(dentist);
+        Dentist dentist = dentistService.getDentist(2);
         dentist.setLicenseNumber(1234);
         dentist.setFirstName("Ian Alexis");
-        dentist.setLastName("Vaernet Pochon");
+        dentist.setLastName("Vaernet");
         Dentist updatedDentist = dentistService.updateDentist(dentist.getId(), dentist);
         assertEquals(1234, updatedDentist.getLicenseNumber());
         assertEquals("Ian Alexis", updatedDentist.getFirstName());
-        assertEquals("Vaernet Pochon", updatedDentist.getLastName());
+        assertEquals("Vaernet", updatedDentist.getLastName());
     }
     @Test
     public void updateDentistWithDAO() throws SQLException {
-        Dentist dentist = new Dentist("test_dentist_dao_3", "hola1234",3785, "Ian", "Vaernet");
-        dentistService.createDentistWithDAO(dentist);
+        Dentist dentist = dentistService.getDentist(2);
         dentist.setLicenseNumber(1234);
         dentist.setFirstName("Ian Alexis");
         dentist.setLastName("Vaernet Pochon");
@@ -73,32 +67,24 @@ public class DentistServiceTest {
 
     @Test
     public void deleteDentist() throws SQLException {
-        Dentist dentist = new Dentist("test_dentist_4", "hola1234",3785, "Ian", "Vaernet");
-        dentistService.createDentist(dentist);
-        boolean deleted = dentistService.deleteDentist(dentist.getId());
+        boolean deleted = dentistService.deleteDentist(3);
         assertTrue(deleted);
-        assertNull(dentistService.getDentist(dentist.getId()));
+        assertNull(dentistService.getDentist(3));
     }
     @Test
     public void deleteDentistWithDAO() throws SQLException {
-        Dentist dentist = new Dentist("test_dentist_dao_4", "hola1234",3785, "Ian", "Vaernet");
-        dentistService.createDentist(dentist);
-        boolean deleted = dentistService.deleteDentistWithDAO(dentist.getId());
+        boolean deleted = dentistService.deleteDentistWithDAO(4);
         assertTrue(deleted);
-        assertNull(dentistService.getDentist(dentist.getId()));
+        assertNull(dentistService.getDentist(4));
     }
 
     @Test
     public void listDentists() throws SQLException {
-        Dentist dentist = new Dentist("test_dentist_5", "hola1234",3785, "Ian", "Vaernet");
-        dentistService.createDentist(dentist);
         List<Dentist> dentists = dentistService.listDentists();
         assertTrue(dentists.size() > 0);
     }
     @Test
     public void listDentistsWithDAO() throws SQLException {
-        Dentist dentist = new Dentist("test_dentist_dao_5", "hola1234",3785, "Ian", "Vaernet");
-        dentistService.createDentist(dentist);
         List<Dentist> dentists = dentistService.listDentistsWithDAO();
         assertTrue(dentists.size() > 0);
     }

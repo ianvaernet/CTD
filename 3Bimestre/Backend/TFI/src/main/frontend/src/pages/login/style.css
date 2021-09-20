@@ -1,0 +1,19 @@
+.login-form {
+  margin: 30vh auto;
+  max-width: 500px;
+  padding: 50px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 350px;
+}
+
+.login-input label,div.ant-form-item-explain {
+    color: #fff;
+}
+
+body {
+    background-color: #001529;
+}
