@@ -2,7 +2,6 @@ import { publicRoutes } from './public';
 import { privateRoutes } from './private';
 import { useUserContext } from '@store';
 import { Switch, Route } from 'react-router-dom';
-import { Role } from '@types';
 import { Layout } from '@templates';
 
 export function Navigator() {

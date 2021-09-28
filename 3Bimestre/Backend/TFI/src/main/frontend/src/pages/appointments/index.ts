@@ -1,1 +1,1 @@
-export * from './ListAppointments';
+export * from './AppointmentsCalendar';

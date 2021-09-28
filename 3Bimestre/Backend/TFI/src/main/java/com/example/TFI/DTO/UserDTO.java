@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDTO {
+    public Integer id;
     public String username;
     public String firstName;
     public String lastName;

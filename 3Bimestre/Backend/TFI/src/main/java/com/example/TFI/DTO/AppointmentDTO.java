@@ -1,11 +1,13 @@
 package com.example.TFI.DTO;
 
-import com.example.TFI.Models.Dentist;
-import com.example.TFI.Models.Patient;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDateTime;
 
-public class AppointmentListDTO {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class AppointmentDTO {
+    public int id;
     public LocalDateTime dateTime;
-    public Dentist dentist;
-    public Patient patient;
+    public DentistListDTO dentist;
+    public PatientListDTO patient;
 }

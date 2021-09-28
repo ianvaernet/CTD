@@ -25,7 +25,7 @@ public class DentistServiceTest {
     }
     @Test
     public void createDentistWithDAO() throws SQLException {
-        Dentist dentist = new Dentist("test_dentist_dao_1", "hola1234",3785, "Ian", "Vaernet");
+        Dentist dentist = new Dentist("test_dentist_dao_1", "hola1234",9234, "Ian", "Vaernet");
         Dentist createdDentist = dentistService.createDentistWithDAO(dentist);
         assertNotNull(createdDentist);
         assertTrue(createdDentist.getId() > 0);

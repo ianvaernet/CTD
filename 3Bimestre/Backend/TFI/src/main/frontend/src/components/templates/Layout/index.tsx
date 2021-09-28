@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Breadcrumb, Layout as AntdLayout, Menu } from 'antd';
+import { Avatar, Breadcrumb, Dropdown, Layout as AntdLayout, Menu } from 'antd';
 import { CalendarOutlined, MedicineBoxOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
 import './style.css';
 import { Role } from '@types';
+import { useUserContext } from '@store';
 const { Sider, Content } = AntdLayout;
 
 type Props = {
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export const Layout: React.FC<Props> = ({ children, userRole }: Props) => {
+  const { user, setUser } = useUserContext();
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const urlParts = location.pathname.split('/');
@@ -28,15 +30,15 @@ export const Layout: React.FC<Props> = ({ children, userRole }: Props) => {
           <img src="/logo.svg" alt="logo" className="layout-sidebar-logo" />
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1" icon={<CalendarOutlined className="layout-sidebar-icon" />} >
+          <Menu.Item key="1" icon={<CalendarOutlined className="layout-sidebar-icon" />}>
             <Link to="/turnos">Turnos</Link>
           </Menu.Item>
-          {userRole === Role.ADMIN && (
+          {userRole === Role.Admin && (
             <Menu.Item key="2" icon={<MedicineBoxOutlined className="layout-sidebar-icon" />}>
               <Link to="/odontologos">Odontólogos</Link>
             </Menu.Item>
           )}
-          {userRole === Role.ADMIN && (
+          {userRole === Role.Admin && (
             <Menu.Item key="3" icon={<UserOutlined className="layout-sidebar-icon" />}>
               <Link to="/pacientes">Pacientes</Link>
             </Menu.Item>
@@ -45,18 +47,32 @@ export const Layout: React.FC<Props> = ({ children, userRole }: Props) => {
       </Sider>
       <AntdLayout className="site-layout">
         <Content className="layout-content">
-          <Breadcrumb className="layout-breadcrumb">
-            {urlParts.map((urlPart, index) => (
-              <Breadcrumb.Item key={urlPart}>
-                <Link to={urlParts.slice(0, index + 1).join('/')}>
-                  {urlPart ? urlPart.slice(0, 1).toUpperCase() + urlPart.slice(1) : 'Inicio'}
-                </Link>
-              </Breadcrumb.Item>
-            ))}
-          </Breadcrumb>
-          <div className="layout-content-background">
-            {children}
-          </div>
+          <header className="layout-header">
+            <Breadcrumb className="layout-breadcrumb">
+              {urlParts.map((urlPart, index) => (
+                <Breadcrumb.Item key={urlPart}>
+                  <Link to={urlParts.slice(0, index + 1).join('/')}>
+                    {urlPart ? urlPart.slice(0, 1).toUpperCase() + urlPart.slice(1) : 'Inicio'}
+                  </Link>
+                </Breadcrumb.Item>
+              ))}
+            </Breadcrumb>
+            <Dropdown
+              overlay={
+                <Menu>
+                  <label style={{margin: 12}}>{user?.firstName + ' ' + user?.lastName}</label>
+                  <Menu.Item onClick={() => setUser(undefined)} danger>
+                    Cerrar sesión
+                  </Menu.Item>
+                </Menu>
+              }
+              placement="bottomRight"
+              className="layout-avatar_dropdown"
+            >
+              <Avatar icon={<UserOutlined />} />
+            </Dropdown>
+          </header>
+          <div className="layout-content-background">{children}</div>
         </Content>
       </AntdLayout>
     </AntdLayout>

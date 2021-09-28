@@ -1,7 +1,7 @@
-import { HTTPMethods, IPatient } from '../types';
+import { HTTPMethods, IPatient, IPatientList } from '../types';
 import { fetchAPI } from './fetchAPI';
 
-export const listPatients = async (): Promise<IPatient[]> => {
+export const listPatients = async (): Promise<IPatientList[]> => {
   return await fetchAPI(HTTPMethods.Get, 'patients/');
 };
 

@@ -1,0 +1,30 @@
+.appointments-title {
+  font-size: 30px;
+  text-align: center;
+}
+.appointements-filter {
+  display: inline-block;
+  margin-right: 60px;
+}
+.appointements-calendar {
+  margin-top: 20px;
+}
+.appointments-filter_select {
+  display: block;
+  width: 90%;
+  max-width: 190px;
+  margin-top: 2px;
+}
+.appointment_form-div {
+  width: 90%;
+  max-width: 200px;
+  margin: 0px auto 15px;
+}
+.appointment_form-label {
+  display: block;
+}
+.appointment_form-picker {
+  display: block;
+  margin-right: 0px;
+  margin-top: 2px;
+}

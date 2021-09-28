@@ -1,23 +1,23 @@
 import { listDentists } from '@services';
-import { IDentist } from '@types';
+import { IDentistList } from '@types';
 import { useEffect, useState } from 'react';
 import { Table, Button, Row, Space } from 'antd';
-import { EyeFilled, EditFilled, DeleteFilled, SearchOutlined } from '@ant-design/icons';
+import { EyeFilled, EditFilled, DeleteFilled } from '@ant-design/icons';
 import { ColumnsType } from 'antd/es/table';
 import './style.css';
 import { Link } from 'react-router-dom';
 
-const columns: ColumnsType<IDentist> = [
+const columns: ColumnsType<IDentistList> = [
   {
     title: 'Nombre y apellido',
     dataIndex: 'fullName',
     defaultSortOrder: 'ascend',
-    sorter: (dentist1: IDentist, dentist2: IDentist) => (dentist1.fullName > dentist2.fullName ? 1 : -1),
+    sorter: (dentist1: IDentistList, dentist2: IDentistList) => (dentist1.fullName > dentist2.fullName ? 1 : -1),
   },
   {
     title: 'Nº licencia',
     dataIndex: 'licenseNumber',
-    sorter: (dentist1: IDentist, dentist2: IDentist) => dentist1.licenseNumber - dentist2.licenseNumber,
+    sorter: (dentist1: IDentistList, dentist2: IDentistList) => dentist1.licenseNumber - dentist2.licenseNumber,
   },
   {
     title: 'Ver',
@@ -52,7 +52,7 @@ const columns: ColumnsType<IDentist> = [
 ];
 
 export const ListDentists = () => {
-  const [dentists, setDentists] = useState<IDentist[]>([]);
+  const [dentists, setDentists] = useState<IDentistList[]>([]);
 
   async function getDentists() {
     try {

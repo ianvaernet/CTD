@@ -17,10 +17,17 @@ export const ViewPatient: React.FC = () => {
   const isDisabled = mode !== Mode.Edit;
 
   const getData = async () => {
+    try {
     const patientData = await getPatient(id);
     if (patientData.address?.floor === 0) delete patientData.address.floor;
     setPatient({ ...patientData, ...patientData.address });
     form.setFieldsValue({ ...patientData, ...patientData.address });
+    } catch (error) {
+      notification.error({
+        message: 'Error al obtener el paciente',
+        description: (error as Error).toString(),
+      });
+    }
   };
 
   useEffect(() => {

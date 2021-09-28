@@ -17,8 +17,7 @@ public class Patient extends User {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
     private Address address;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id")
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Appointment> appointments;
 
     public Patient() {
@@ -55,13 +54,6 @@ public class Patient extends User {
         this.address = address;
     }
 
-    public List<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
 
     @Override
     public String toString() {

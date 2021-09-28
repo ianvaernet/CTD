@@ -15,6 +15,15 @@
   margin: 0 16px;
 }
 
+.layout-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.layout-avatar_dropdown {
+  margin: 10px;
+}
+
 .layout-content-background {
   background: #fff;
   padding: 24px;

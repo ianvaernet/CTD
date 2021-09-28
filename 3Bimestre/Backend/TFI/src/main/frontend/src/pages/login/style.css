@@ -10,10 +10,16 @@
   height: 350px;
 }
 
-.login-input label,div.ant-form-item-explain {
-    color: #fff;
+.login-title {
+  color: #fff;
+  text-align: center;
+}
+
+.login-input label,
+div.ant-form-item-explain {
+  color: #fff;
 }
 
 body {
-    background-color: #001529;
+  background-color: #001529;
 }

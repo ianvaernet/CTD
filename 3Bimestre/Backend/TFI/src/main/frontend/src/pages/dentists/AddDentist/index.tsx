@@ -41,7 +41,7 @@ export const AddDentist: React.FC = () => {
         onFinish={onSubmit}
       >
         <Input name="username" label="Usuario" required />
-        <Input name="password" label="Contraseña" required />
+        <Input type={InputType.Password} name="password" label="Contraseña" required />
         <Input name="firstName" label="Nombre" required />
         <Input name="lastName" label="Apellido" required />
         <Input type={InputType.Number} name="licenseNumber" label="Nº de licencia" required />

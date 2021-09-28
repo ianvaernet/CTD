@@ -22,67 +22,53 @@ public class UserServiceTest {
 
     @Test
     public void login() {
-        Dentist dentist = new Dentist("test_user_1", "hola1234", 3785, "Ian", "Vaernet");
-        dentistService.createDentist(dentist);
-        User user = userService.login("test_user_1", "hola1234");
+        User user = userService.login("admin", "admin");
         assertNotNull(user);
-        assertEquals(Role.DENTIST, user.getRole());
+        assertEquals(Role.ADMIN, user.getRole());
     }
     @Test
-    public void loginWithDAO() throws SQLException {
-        Dentist dentist = new Dentist("test_user_dao_1", "hola1234", 3785, "Ian", "Vaernet");
-        dentistService.createDentistWithDAO(dentist);
-        User user = userService.loginWithDAO("test_user_dao_1", "hola1234");
+    public void loginWithDAO() {
+        User user = userService.loginWithDAO("admin", "admin");
         assertNotNull(user);
-        assertEquals(Role.DENTIST, user.getRole());
+        assertEquals(Role.ADMIN, user.getRole());
     }
 
     @Test
     public void loginWithInexistingUsername() {
-        Dentist dentist = new Dentist("test_user_2", "hola1234", 3785, "Ian", "Vaernet");
-        dentistService.createDentist(dentist);
-        User userWithWrongUsername = userService.login("fake_user", "hola1234");
+        User userWithWrongUsername = userService.login("wrong_user", "admin");
         assertNull(userWithWrongUsername);
     }
 
     @Test
     public void loginWithWrongPassword() {
-        Dentist dentist = new Dentist("test_user_3", "hola1234", 3785, "Ian", "Vaernet");
-        dentistService.createDentist(dentist);
-        User userWithWrongPassword = userService.login("test_user_3", "asdqwe");
+        User userWithWrongPassword = userService.login("admin", "wrong_password");
         assertNull(userWithWrongPassword);
     }
 
     @Test
     public void changePassword() {
-        Dentist dentist = new Dentist("test_user_4", "hola1234", 3785, "Ian", "Vaernet");
-        dentistService.createDentist(dentist);
-        boolean passwordChanged = userService.changePassword("test_user_4", "hola1234", "chau9876");
+        boolean passwordChanged = userService.changePassword("paciente", "paciente", "new_password");
         assertTrue(passwordChanged);
-        User userWithOldPassword = userService.login("test_user_4", "hola1234");
+        User userWithOldPassword = userService.login("paciente", "wrong_password");
         assertNull(userWithOldPassword);
-        User user = userService.login("test_user_4", "chau9876");
+        User user = userService.login("paciente", "new_password");
         assertNotNull(user);
     }
     @Test
-    public void changePasswordWithDAO() throws SQLException {
-        Dentist dentist = new Dentist("test_user_dao_4", "hola1234", 3785, "Ian", "Vaernet");
-        dentistService.createDentistWithDAO(dentist);
-        boolean passwordChanged = userService.changePasswordWithDAO("test_user_dao_4", "hola1234", "chau9876");
+    public void changePasswordWithDAO() {
+        boolean passwordChanged = userService.changePasswordWithDAO("odontologo", "odontologo", "new_password");
         assertTrue(passwordChanged);
-        User userWithOldPassword = userService.loginWithDAO("test_user_dao_4", "hola1234");
+        User userWithOldPassword = userService.loginWithDAO("odontologo", "odontologo");
         assertNull(userWithOldPassword);
-        User user = userService.loginWithDAO("test_user_dao_4", "chau9876");
+        User user = userService.loginWithDAO("odontologo", "new_password");
         assertNotNull(user);
     }
 
     @Test
     public void changePasswordWithWrongOldPassword() {
-        Dentist dentist = new Dentist("test_user_5", "hola1234", 3785, "Ian", "Vaernet");
-        dentistService.createDentist(dentist);
-        boolean passwordChanged = userService.changePassword("test_user_5", "wrong_password", "chau9876");
+        boolean passwordChanged = userService.changePassword("paciente", "wrong_password", "new_password");
         assertFalse(passwordChanged);
-        User userWithOldPassword = userService.login("test_user_5", "chau9876");
-        assertNull(userWithOldPassword);
+        User userWithNewPassword = userService.login("paciente", "new_password");
+        assertNull(userWithNewPassword);
     }
 }

@@ -11,7 +11,7 @@ export const privateRoutes = (role: Role) => {
     },
   ];
 
-  if (role === Role.ADMIN) {
+  if (role === Role.Admin) {
     routes.push({
       path: '/odontologos',
       exact: true,

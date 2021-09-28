@@ -17,9 +17,16 @@ export const ViewDentist: React.FC = () => {
   const isDisabled = mode !== Mode.Edit;
 
   const getData = async () => {
+    try {
     const dentistData = await getDentist(id);
     setDentist(dentistData);
     form.setFieldsValue(dentistData);
+    } catch(error) {
+      notification.error({
+        message: 'Error al obtener el odontólogo',
+        description: (error as Error).toString(),
+      });
+    }
   };
 
   useEffect(() => {

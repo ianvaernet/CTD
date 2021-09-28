@@ -1,23 +1,23 @@
 import { listPatients } from '@services';
-import { IPatient } from '@types';
+import { IPatientList } from '@types';
 import { useEffect, useState } from 'react';
 import { Table, Button, Row, Space } from 'antd';
-import { EyeFilled, EditFilled, DeleteFilled, SearchOutlined } from '@ant-design/icons';
+import { EyeFilled, EditFilled, DeleteFilled } from '@ant-design/icons';
 import { ColumnsType } from 'antd/es/table';
 import './style.css';
 import { Link } from 'react-router-dom';
 
-const columns: ColumnsType<IPatient> = [
+const columns: ColumnsType<IPatientList> = [
   {
     title: 'Nombre y apellido',
     dataIndex: 'fullName',
     defaultSortOrder: 'ascend',
-    sorter: (patient1: IPatient, patient2: IPatient) => (patient1.fullName > patient2.fullName ? 1 : -1),
+    sorter: (patient1: IPatientList, patient2: IPatientList) => (patient1.fullName > patient2.fullName ? 1 : -1),
   },
   {
     title: 'DNI',
     dataIndex: 'dni',
-    sorter: (patient1: IPatient, patient2: IPatient) => (patient1.DNI - patient2.DNI),
+    sorter: (patient1: IPatientList, patient2: IPatientList) => (patient1.DNI - patient2.DNI),
   },
   {
     title: 'Ver',
@@ -52,7 +52,7 @@ const columns: ColumnsType<IPatient> = [
 ];
 
 export const ListPatients = () => {
-  const [patients, setPatients] = useState<IPatient[]>([]);
+  const [patients, setPatients] = useState<IPatientList[]>([]);
 
   async function getPatients() {
     try {

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "users")
+@Table(name = "users", indexes = @Index(columnList = "username"))
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

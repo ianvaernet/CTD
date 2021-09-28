@@ -1,7 +1,7 @@
-import { HTTPMethods, IDentist } from '../types';
+import { HTTPMethods, IDentist, IDentistList } from '../types';
 import { fetchAPI } from './fetchAPI';
 
-export const listDentists = async (): Promise<IDentist[]> => {
+export const listDentists = async (): Promise<IDentistList[]> => {
   return await fetchAPI(HTTPMethods.Get, 'dentists');
 };
 

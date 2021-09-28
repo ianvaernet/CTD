@@ -21,7 +21,7 @@ export const Input: React.FC<Props> = ({ type, name, label, required, disabled, 
       {type === InputType.Number ? (
         <InputNumber placeholder={label} disabled={disabled} className={"width-100 " + props.className} />
       ) : (
-        <AntdInput placeholder={label} disabled={disabled} className={props.className} {...inputProps} />
+        <AntdInput type={type} placeholder={label} disabled={disabled} className={props.className} {...inputProps} />
       )}
     </Form.Item>
   );

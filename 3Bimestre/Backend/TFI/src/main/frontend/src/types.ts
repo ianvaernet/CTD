@@ -26,6 +26,7 @@ export enum HTTPMethods {
 
 export enum InputType {
   Number = 'number',
+  Password = 'password',
   Text = 'text',
 }
 
@@ -36,9 +37,9 @@ export enum Mode {
 }
 
 export enum Role {
-  ADMIN = 'ADMIN',
-  DENTIST = 'DENTIST',
-  PATIENT = 'PATIENT',
+  Admin = 'ADMIN',
+  Dentist = 'DENTIST',
+  Patient = 'PATIENT',
 }
 
 // =============================================================
@@ -50,7 +51,28 @@ export interface IAddress {
   apartment?: string;
 }
 
+export interface IAppointment {
+  id: number;
+  dateTime: string;
+  dentist: IDentistList;
+  patient: IPatientList;
+}
+
+export interface ICreateAppointment {
+  dateTime: Date;
+  dentistId: number;
+  patientId: number;
+}
+
 export interface IDentist {
+  licenseNumber: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface IDentistList {
+  id: number;
   fullName: string;
   licenseNumber: number;
 }
@@ -60,12 +82,22 @@ export interface ILoginData {
   password: string;
 }
 export interface IPatient {
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  DNI: number;
+  entryDate: string;
+  address: IAddress;
+}
+export interface IPatientList {
+  id: number;
   fullName: string;
   DNI: number;
-  address?: IAddress;
 }
 
 export interface IUser {
+  id: number;
   firstName: string;
   lastName: string;
   username: string;
@@ -74,5 +106,5 @@ export interface IUser {
 
 export interface IUserContext {
   user: IUser | void;
-  setUser: (user: IUser) => void;
+  setUser: (user: IUser | undefined) => void;
 }

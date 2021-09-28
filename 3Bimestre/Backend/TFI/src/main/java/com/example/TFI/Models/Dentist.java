@@ -8,8 +8,7 @@ import java.util.List;
 public class Dentist extends User {
     @Column(nullable = false, unique = true)
     private Integer licenseNumber;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "dentist_id")
+    @OneToMany(mappedBy = "dentist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Appointment> appointments;
 
     public Dentist() {

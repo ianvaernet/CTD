@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fullcalendar/core": "^5.9.0",
+    "@fullcalendar/daygrid": "^5.9.0",
+    "@fullcalendar/interaction": "^5.9.0",
+    "@fullcalendar/list": "^5.9.0",
+    "@fullcalendar/react": "^5.9.0",
     "antd": "^4.16.13",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
