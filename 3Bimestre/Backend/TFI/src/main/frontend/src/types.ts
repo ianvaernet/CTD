@@ -102,6 +102,7 @@ export interface IUser {
   lastName: string;
   username: string;
   role: Role;
+  token: string;
 }
 
 export interface IUserContext {

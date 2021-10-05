@@ -8,6 +8,8 @@ import com.example.TFI.Models.Patient;
 import com.example.TFI.Services.AppointmentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/appointments")
+@Tag(name="Turnos")
 public class AppointmentController {
     private static final Logger logger = Logger.getLogger(AppointmentController.class);
     @Autowired
@@ -26,7 +30,7 @@ public class AppointmentController {
 
     @GetMapping
     @ResponseBody
-    @CrossOrigin("*")
+    @Operation(summary = "Listar turnos")
     public ResponseEntity<List<AppointmentDTO>> listAppointments(@RequestParam(required = false) Integer dentistId, @RequestParam(required = false) Integer patientId) {
         try {
             List<Appointment> appointments = appointmentService.listAppointments(dentistId, patientId);
@@ -41,7 +45,7 @@ public class AppointmentController {
 
     @PostMapping
     @ResponseBody
-    @CrossOrigin("*")
+    @Operation(summary = "Registrar turno")
     public ResponseEntity<Appointment> createAppointment(@RequestBody CreateAppointmentDTO newAppointment) {
         try {
             Appointment appointment = new Appointment();
@@ -60,7 +64,7 @@ public class AppointmentController {
     }
 
     @DeleteMapping("/{id}")
-    @CrossOrigin("*")
+    @Operation(summary = "Eliminar turno por ID")
     public ResponseEntity deleteAppointment(@PathVariable int id) {
         try {
             boolean success = appointmentService.deleteAppointment(id);

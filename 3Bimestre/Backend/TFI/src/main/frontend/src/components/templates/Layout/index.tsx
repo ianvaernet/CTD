@@ -23,6 +23,11 @@ export const Layout: React.FC<Props> = ({ children, userRole }: Props) => {
     setCollapsed((isCollapsed) => !isCollapsed);
   };
 
+  const logOut = () => {
+    setUser(undefined);
+    document.cookie = 'user="";expires=Thu, 01 Jan 1970 00:00:01 GMT';
+  };
+
   return (
     <AntdLayout>
       <Sider collapsible collapsed={collapsed} onCollapse={toggleMenu} className="layout-sidebar">
@@ -60,8 +65,8 @@ export const Layout: React.FC<Props> = ({ children, userRole }: Props) => {
             <Dropdown
               overlay={
                 <Menu>
-                  <label style={{margin: 12}}>{user?.firstName + ' ' + user?.lastName}</label>
-                  <Menu.Item onClick={() => setUser(undefined)} danger>
+                  <label style={{ margin: 12 }}>{user?.firstName + ' ' + user?.lastName}</label>
+                  <Menu.Item onClick={logOut} danger>
                     Cerrar sesión
                   </Menu.Item>
                 </Menu>

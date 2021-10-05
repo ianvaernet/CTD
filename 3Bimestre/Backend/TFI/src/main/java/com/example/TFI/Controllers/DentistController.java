@@ -5,18 +5,23 @@ import com.example.TFI.DTO.DentistListDTO;
 import com.example.TFI.Models.Dentist;
 import com.example.TFI.Services.DentistService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/dentists")
+@Tag(name="Odontólogos")
 public class DentistController {
     private static final Logger logger = Logger.getLogger(DentistController.class);
     @Autowired
@@ -24,7 +29,7 @@ public class DentistController {
 
     @GetMapping
     @ResponseBody
-    @CrossOrigin("*")
+    @Operation(summary = "Listar odontólogos")
     public ResponseEntity<List<DentistListDTO>> listDentists() {
         try {
             List<Dentist> dentists = dentistService.listDentists();
@@ -39,7 +44,8 @@ public class DentistController {
 
     @PostMapping
     @ResponseBody
-    @CrossOrigin("*")
+    @Secured({"ROLE_ADMIN"})
+    @Operation(summary = "Registrar odontólogo")
     public ResponseEntity createDentist(@RequestBody Dentist newDentist) {
         try {
             Dentist dentist = dentistService.createDentist(newDentist);
@@ -60,7 +66,7 @@ public class DentistController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @CrossOrigin("*")
+    @Operation(summary = "Obtener odontólogo por ID")
     public ResponseEntity readDentist(@PathVariable int id) {
         Dentist dentist = dentistService.getDentist(id);
         if (dentist == null)
@@ -71,7 +77,8 @@ public class DentistController {
 
     @PutMapping("/{id}")
     @ResponseBody
-    @CrossOrigin("*")
+    @Secured({"ROLE_ADMIN"})
+    @Operation(summary = "Actualizar odontólogo")
     public ResponseEntity updateDentist(@PathVariable int id, @RequestBody Dentist updatedDentist) {
         try {
             Dentist dentist = dentistService.updateDentist(id, updatedDentist);
@@ -91,7 +98,8 @@ public class DentistController {
 
     @DeleteMapping("/{id}")
     @ResponseBody
-    @CrossOrigin("*")
+    @Secured({"ROLE_ADMIN"})
+    @Operation(summary = "Eliminar odontólogo por ID")
     public ResponseEntity deleteDentist(@PathVariable int id) {
         try {
             boolean success = dentistService.deleteDentist(id);

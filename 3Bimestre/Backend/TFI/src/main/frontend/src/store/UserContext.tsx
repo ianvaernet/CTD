@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
 import { IUser, IUserContext } from 'src/types';
+import { getCookie } from 'src/utils';
 
-const UserContext = createContext<IUserContext>({ user: undefined, setUser: () => null });
+const userCookie = getCookie('user');
+const UserContext = createContext<IUserContext>({ user: userCookie ? JSON.parse(userCookie) : undefined, setUser: () => null });
 UserContext.displayName = 'UserContext';
 
 export const UserContextProvider = ({ authenticatedUser, children }: { authenticatedUser?: IUser; children: JSX.Element }): JSX.Element => {
