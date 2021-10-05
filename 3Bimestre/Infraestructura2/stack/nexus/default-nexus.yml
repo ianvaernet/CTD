@@ -1,0 +1,86 @@
+---
+core:
+  baseUrl: ${BASE_URL:"localhost:8081"}
+  userAgentCustomization: "CasC test"
+  connectionTimeout: 60
+  connectionRetryAttempts: 10
+capabilities:
+  - type: OutreachManagementCapability
+    enabled: false
+security:
+  anonymousAccess: true
+  pruneUsers: true
+  privileges: []
+  roles:
+    - id: repository-read-all
+      enabled: true
+      source: default
+      name: repository-read-all
+      description: "Read All permission for repositories"
+      privileges:
+        - nx-apikey-all
+        - nx-healthcheck-read
+        - nx-repository-view-*-*-browse
+        - nx-repository-view-*-*-read
+        - nx-search-read
+    - id: repository-write-all
+      enabled: true
+      source: default
+      name: repository-write-all
+      description: "Write All permission for repositories"
+      privileges:
+        - nx-apikey-all
+        - nx-healthcheck-read
+        - nx-repository-view-*-*-*
+        - nx-search-read
+  users:
+    - username: anonymous
+      firstName: Anonymous
+      lastName: User
+      password: anonymous
+      updateExistingPassword: false
+      email: anonymous@example.org
+      roles:
+        - source: "default"
+          role: repository-read-docker
+    - username: nexus
+      firstName: nexus
+      lastName: server
+      password: "nexus"
+      updateExistingPassword: true
+      email: nexus@example.org
+      roles:
+        - source: "default"
+          role: nx-admin
+repository:
+  pruneBlobStores: true
+  blobStores:
+    - name: maven
+      type: File
+      attributes:
+        file:
+          path: maven
+        blobStoreQuotaConfig:
+          quotaLimitBytes: 10240000000
+          quotaType: spaceUsedQuota
+  pruneCleanupPolicies: true
+ # cleanupPolicies:
+ #   - name: cleanup-everything
+ #     format: ALL_FORMATS
+ #     notes: ''
+ #     criteria:
+ #       lastDownloaded: 864000
+  pruneRepositories: true
+  repositories:
+    - name: myrepo
+      online: true
+      recipeName: maven2-hosted
+      attributes:
+        maven:
+          versionPolicy: MIXED
+          layoutPolicy: STRICT
+        storage:
+          writePolicy: ALLOW
+          strictContentTypeValidattion: true
+          blobStoreName: maven
+

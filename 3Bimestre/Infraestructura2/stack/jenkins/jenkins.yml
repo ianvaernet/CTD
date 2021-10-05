@@ -1,0 +1,176 @@
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - usernamePassword:
+          id: "nexus"
+          password: "nexus"
+          scope: GLOBAL
+          username: "nexus"
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  labelAtoms:
+  - name: "master"
+  labelString: "master"
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  numExecutors: 2
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: true
+  scmCheckoutRetryCount: 0
+  slaveAgentPort: 50000
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://updates.jenkins.io/update-center.json"
+  views:
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+unclassified:
+  location:
+    adminAddress: "jenkins@example.com"
+    url: "https://localhost:8080/"
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+  maven:
+    installations:
+    - name: "Maven"
+      properties:
+      - installSource:
+          installers:
+          - maven:
+              id: "3.8.2"
+  mavenGlobalConfig:
+    globalSettingsProvider: "standard"
+    settingsProvider: "standard"
+jobs:
+  - script: >
+      pipelineJob('pipeline-deploy') {
+        environmentVariables {
+          keepBuildVariables(true)
+          keepSystemVariables(true)
+        }
+        definition {
+          cps {
+            script('''
+              pipeline {
+                agent any
+                stages {
+                  stage('get Release app') {
+                    steps {
+                      dir ('server') {
+                        sh """
+                          curl -v -u nexus:nexus http://nexus:8081/repository/myrepo/test/holamundo/1.0.0/holamundo-1.0.0.jar > holamundo.jar
+                        """
+                      }
+                    }
+                  }
+                  stage('Deploy app') {
+                    steps{
+                      dir ('server') {
+                        sh """
+                          cp /server/* ./
+                          docker rm -f server
+                          docker build . -t server
+                          docker container run -d --name server --publish 3001:80 server
+                        """
+                      }
+                    }
+                  }
+                }
+              }
+            '''.stripIndent())    
+          }
+        }
+        logRotator {
+          numToKeep(30)
+          artifactNumToKeep(30)
+        }
+      }
+  - script: >
+      pipelineJob('pipeline-release') {
+        environmentVariables {
+          keepBuildVariables(true)
+          keepSystemVariables(true)
+        }
+        definition {
+          cps {
+            script('''
+              pipeline {
+                agent {
+                    label "master"
+                }
+                tools {
+                    maven "Maven"
+                }
+                environment {
+                    NEXUS_VERSION = "nexus3"
+                    NEXUS_PROTOCOL = "http"
+                    NEXUS_URL = "nexus:8081"
+                    NEXUS_REPOSITORY = "myrepo"
+                    NEXUS_CREDENTIAL_ID = "nexus"
+                }
+                stages {
+                  stage("get jar") {
+                    steps {
+                      sh """
+                         cp /app/app.jar ./holamundo.jar
+                      """
+                    }
+                  }
+                  stage("test app") {
+                    steps {
+                      script {
+                        sh """
+                          java -jar holamundo.jar 
+                        """
+                      }
+                    }
+                  }
+                  stage("Publish to Nexus Repository Manager") {
+                    steps {
+                      script {
+                        nexusArtifactUploader(
+                          nexusVersion: NEXUS_VERSION,
+                          protocol: NEXUS_PROTOCOL,
+                          nexusUrl: NEXUS_URL,
+                          groupId: "test",
+                          version: "1.0.0",
+                          repository: NEXUS_REPOSITORY,
+                          credentialsId: NEXUS_CREDENTIAL_ID,
+                          artifacts: [
+                            [artifactId: "holamundo",
+                            classifier: '',
+                            file: "holamundo.jar",
+                            type: "jar"]
+                          ]
+                        );
+                      }
+                    }
+                  }
+                }
+              }
+            '''.stripIndent())    
+          }
+        }
+        logRotator {
+          numToKeep(30)
+          artifactNumToKeep(30)
+        }
+      }

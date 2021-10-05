@@ -1,0 +1,216 @@
+Describí con TUS PALABRAS el principio de idempotencia
+La idempotencia es la capacidad de realizar una misma acción n cantidad de veces y obtener siempre el mismo resultado. Un ejemplo de aplicación de este principio es el utilizado por las herramientas de infraestructura como código: al aplicar un template se crean los recursos indicados. Ahora bien, si no se realizan modificaciones a dicho template, aplicarlo de forma repetida no produce cambios en los recursos desplegados, obteniéndose como resultado el mismo stack de recursos.
+
+
+Primero se crea el archivo de configuración o template de Ansible llamado playbook, el cual describe el estado deseado de la infraestructura. En dicho playbook se especifica el/los host de destino y las tareas a aplicar en ellos (y dentro de cada tarea, el módulo a utilizar). Luego, se aplica ese playbook usando el comando ansible-playbook junto con el nombre del archivo. Al ejecutar dicho comando, Ansible se encarga de aprovisionar los recursos indicados en el playbook.
+
+
+Se enfoca en los resultados
+Opera sobre diferentes nubes
+Se encarga de la infraestructura
+Le interesa el apoyo de la comunidad
+
+
+Explique que es un ARTEFACTO. Ejemplifique
+Un artefacto es un archivo binario (es decir, interpretable por la computadora pero ilegible para los humanos) que resulta de llevar a cabo el proceso de compilación de un código fuente. Ejemplos de este tipo de archivos son los .dll, .exe, etc
+
+Definí CON TUS PALABRAS que es el monitoreo
+El monitoreo es el proceso que consiste en recopilar y analizar información sobre el estado de la infraestructura o las aplicaciones que se ejecutan en ella, de forma periódica, con el objetivo de ver qué está pasando, utilizando para ello diversas métricas, y realizar correcciones en caso de encontrar problemas o desvíos respecto de los valores esperados.
+
+
+Correcciones:
+- Las regiones del security group y la instancia de EC2 deben ser las mismas: no se especifica así que elegí us-east-1 pero podría ser us-west-2 sin ningún problema.
+- En el security group: el puerto de SSH es el 22, no el 23. El puerto 8080 es innecesario. Si no se desea acceder por HTTP/HTTPS también se podrían quitar los puertos 80 y 443.
+- El nombre del security group al que se hace referencia en la instancia EC2 debe ser el mismo que se indicó más arriba cuando se lo creó (en este caso, sg_profe en lugar de grupo_creado).
+- Se debe asignar una ip pública a la instancia de EC2, la cual utilizaremos para conectarnos mediante SSH.
+
+Solución:
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Crear grupo de seguridad con HTTPS, HTTP y SSH
+      ec2_group:
+        name: sg_profe
+        vpc_id: vpc-7a117c07
+        description: sg con las reglas
+        region: us-east-1
+        rules:
+          - proto: tcp
+            ports:
+              - 443
+              - 80
+              - 22
+            cidr_ip: 0.0.0.0/0
+            rule_desc: Acepto todo el trafico
+    - name: Creamos nuestro servidor
+      ec2:
+        region: us-east-1
+        instance_type: t2.micro
+        image: ami-0c2b8ca1dad447f8a
+        instance_tags:
+          Name: Instancia_Profe
+        wait: yes
+        wait_timeout: 500
+        group: sg_profe
+        volumes:
+          - device_name: /dev/xvda
+            volume_type: gp2
+            volume_size: 8
+        vpc_subnet_id: subnet-82bceedd
+        assign_public_ip: yes
+        key_name: millave
+      register: info
+    - name: DNS Publico de nuestro servidor
+      debug:
+        msg: 'La ip publica es {{ info.instances[0].public_ip }} y su DNS es {{ info.instances[0].public_dns_name }}'
+
+
+
+
+
+Revisamos y corregimos el archivo 
+https://github.com/repoinfradh/deploy_app/blob/main/two.tf
+Para que a través del mismo pueda generar la siguiente infraestructura
+
+- DOS INSTANCIAS, una llamada Frontend y otra Backend
+- La instancia de Frontend debe tener abiertos los puertos TCP 80 y 22, accesibles por cualquier IP
+- La instancia de Backend deber abierto el puerto TCP 22 (accesible por cualquier IP) y el puerto 3306 , accesible solo desde la IPv4 190.221.173.200
+- Ambas instancias deben usar la llave myKey
+
+CORRECCIONES:
+- Cambiar el puerto del ingress SSH a 22
+- En la instancia, cambiar el key_name a miKey
+- Agregar el security group (sg_front) para la instancia de Frontend, con ingress para los puertos 80 y 22 de todas las IP
+- Agregar la instancia de Frontend idéntica a la de Backend, cambiando solamente el security group a sg_front
+
+SOLUCIÓN:
+provider "aws" {
+  region = "us-east-1"
+}
+
+data "aws_ami" "amazon-linux-2" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm*"]
+  }
+}
+
+
+resource "tls_private_key" "pk" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "kp" {
+  key_name   = "myKey"       
+  public_key = tls_private_key.pk.public_key_openssh
+ 
+}
+
+
+resource "aws_default_vpc" "default" {
+  tags = {
+    Name = "Default VPC"
+  }
+}
+
+data "aws_subnet_ids" "subnets" {
+  vpc_id = aws_default_vpc.default.id
+}
+
+
+resource "aws_security_group" "sg" {
+  name        = "SecurityGroupDH"
+  description = "Grupo de seguridad"
+  vpc_id      = aws_default_vpc.default.id
+
+  ingress = [
+    {
+      description      = "MySQL"
+      from_port        = 3306
+      to_port          = 3306
+      protocol         = "tcp"
+      cidr_blocks      = ["190.221.173.200/32"]
+      ipv6_cidr_blocks = ["::/0"]
+      prefix_list_ids = []
+      security_groups = []
+      self = true
+    },
+    {
+      description      = "SSH"
+      from_port        = 22
+      to_port          = 22
+      protocol         = "tcp"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+      prefix_list_ids = []
+      security_groups = []
+      self = true
+    }
+  ]
+
+tags = {
+    Name = "Security_Group_DH"
+  }
+}
+
+resource "aws_instance" "backend" {
+  ami           = data.aws_ami.amazon-linux-2.id
+  instance_type = "t2.micro"
+  subnet_id = tolist(data.aws_subnet_ids.subnets.ids)[0]
+  vpc_security_group_ids = [aws_security_group.sg.id]
+  key_name = "myKey"
+  tags = {
+    Name = "Backend"
+  }
+}
+
+resource "aws_security_group" "sg_front" {
+    name        = "SecurityGroupDH_Frontend"
+    description = "Grupo de seguridad Frontend"
+    vpc_id      = aws_default_vpc.default.id
+  
+    ingress = [
+     {
+        description      = "HTTP"
+        from_port        = 80
+        to_port          = 80
+        protocol         = "tcp"
+        cidr_blocks      = ["0.0.0.0/0"]
+        ipv6_cidr_blocks = ["::/0"]
+        prefix_list_ids = []
+        security_groups = []
+        self = true
+      },
+      {
+        description      = "SSH"
+        from_port        = 22
+        to_port          = 22
+        protocol         = "tcp"
+        cidr_blocks      = ["0.0.0.0/0"]
+        ipv6_cidr_blocks = ["::/0"]
+        prefix_list_ids = []
+        security_groups = []
+        self = true
+      }
+    ]
+  
+  tags = {
+      Name = "Security_Group_DH_Frontend"
+    }
+  }
+  
+  resource "aws_instance" "frontend" {
+    ami           = data.aws_ami.amazon-linux-2.id
+    instance_type = "t2.micro"
+    subnet_id = tolist(data.aws_subnet_ids.subnets.ids)[0]
+    vpc_security_group_ids = [aws_security_group.sg_front.id]
+    key_name = "myKey"
+    tags = {
+      Name = "Frontend"
+    }
+  }
